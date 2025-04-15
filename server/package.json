@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "@ivishop/backend",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -17,6 +17,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@trpc/server": "^11.1.0",
     "express": "^5.1.0"
   }
 }
