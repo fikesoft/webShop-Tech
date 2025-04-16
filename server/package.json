@@ -6,9 +6,11 @@
     "dev": "ts-node-dev --rs ./src/server.ts",
     "build": "rimraf ./dist && tsc --build ./tsconfig.json",
     "start": "node ./dist/server.js",
+    "types":"tsc --noEmit --project ./tsconfig.json",
     "prettify": "prettier --config ../.prettierrc.yml --log-level warn --cache --write '{src/**/*,*}.{ts,tsx,js,jsx,json,scss,css,md}' "
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "prettier": "^3.5.3",
     "rimraf": "^6.0.1",
@@ -18,6 +20,7 @@
   },
   "dependencies": {
     "@trpc/server": "^11.1.0",
+    "cors": "^2.8.5",
     "express": "^5.1.0"
   }
 }
