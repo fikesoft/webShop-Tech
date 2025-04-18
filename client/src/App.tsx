@@ -2,8 +2,7 @@ import { trpc } from './lib/trpc'
 
 function App() {
   const { isLoading } = trpc.getTest.useQuery()
-  let fa = 34
-  let fa2 = 'Fas'
+  const fa = 34
   if (fa) {
     console.log(':DFa')
   }

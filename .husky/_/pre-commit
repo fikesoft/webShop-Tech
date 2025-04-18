@@ -1,13 +1,2 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-echo "👉 Running pre-commit hook..."
-
-npm run format
-
-if [ $? -eq 0 ]; then
-  echo "✅ Format & lint passed. Ready to commit! 🚀"
-else
-  echo "❌ Format or lint failed. Commit aborted. 💥"
-  exit 1
-fi
+#!/usr/bin/env sh
+. "$(dirname "$0")/h"
