@@ -3,11 +3,11 @@
 
 echo "👉 Running pre-commit hook..."
 
-npm run lint
+npm run format
 
 if [ $? -eq 0 ]; then
-  echo "✅ Lint passed. Ready to commit!"
+  echo "✅ Format & lint passed. Ready to commit! 🚀"
 else
-  echo "❌ Lint failed. Commit aborted."
+  echo "❌ Format or lint failed. Commit aborted. 💥"
   exit 1
 fi
