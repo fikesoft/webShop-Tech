@@ -6,7 +6,7 @@
     "dev": "ts-node-dev --rs ./src/server.ts",
     "build": "rimraf ./dist && tsc --build ./tsconfig.json",
     "start": "node ./dist/server.js",
-    "types":"tsc --noEmit --project ./tsconfig.json",
+    "types": "tsc --noEmit --project ./tsconfig.json",
     "prettify": "prettier --config ../.prettierrc.yml --log-level warn --cache --write '{src/**/*,*}.{ts,tsx,js,jsx,json,scss,css,md}' "
   },
   "devDependencies": {

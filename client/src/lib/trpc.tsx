@@ -1,8 +1,8 @@
-import type { TrpcRouter } from '@ivishop/backend/src/trpc';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createTRPCReact, httpBatchLink } from '@trpc/react-query';
+import type { TrpcRouter } from '@ivishop/backend/src/trpc'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { createTRPCReact, httpBatchLink } from '@trpc/react-query'
 
-export const trpc = createTRPCReact<TrpcRouter>();
+export const trpc = createTRPCReact<TrpcRouter>()
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,7 +11,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
     },
   },
-});
+})
 
 const trpcClient = trpc.createClient({
   links: [
@@ -19,12 +19,12 @@ const trpcClient = trpc.createClient({
       url: 'http://localhost:3000/trpc',
     }),
   ],
-});
+})
 
 export const TrpcProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}> {children} </QueryClientProvider>
     </trpc.Provider>
-  );
-};
+  )
+}

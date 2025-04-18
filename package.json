@@ -1,6 +1,6 @@
 {
   "name": "ivi-shop",
-  "private":true,
+  "private": true,
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,11 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\""
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "prettier": "prettier --write .",
+    "format": "concurrently \" npm run lint \" \" npm run prettier \"  ",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -25,6 +29,19 @@
   },
   "homepage": "https://github.com/fikesoft/webShop-Tech#readme",
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "@eslint/js": "^9.24.0",
+    "@typescript-eslint/eslint-plugin": "^8.30.1",
+    "@typescript-eslint/parser": "^8.30.1",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
   }
 }

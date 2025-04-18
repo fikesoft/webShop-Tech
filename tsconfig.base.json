@@ -1,5 +1,4 @@
 {
-  "extends": "../tsconfig.base.json",
   "ts-node": {
     "files": true,
     "transpileOnly": true
@@ -9,20 +8,20 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop":true,
+    "forceConsistentCasingInFileNames": true,           
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict":true,
     "sourceMap": true,
     "resolveJsonModule": true,
     "inlineSources": true,
     "isolatedModules": false,
     "moduleResolution": "Node",
-    "lib": ["ES2021"],
-    "target": "ES2021",
-    "module": "commonjs"
+    "lib": ["dom", "esnext"],
+    "target": "ES2021",                                  
+    "module": "commonjs",                               
   },
   "include": ["src"]
 }

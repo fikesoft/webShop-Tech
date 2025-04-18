@@ -1,5 +1,13 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run format
-git add .
+echo "👉 Running pre-commit hook..."
+
+npm run lint
+
+if [ $? -eq 0 ]; then
+  echo "✅ Lint passed. Ready to commit!"
+else
+  echo "❌ Lint failed. Commit aborted."
+  exit 1
+fi
