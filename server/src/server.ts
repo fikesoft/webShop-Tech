@@ -4,7 +4,9 @@ import { trpcRouter } from './trpc'
 import cors from 'cors'
 
 const expressApp = express()
-
+if (true) {
+  console.log('Fasfk')
+}
 expressApp.use(cors())
 expressApp.use(
   '/trpc',

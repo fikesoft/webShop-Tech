@@ -1,17 +1,26 @@
-import { trpc } from './lib/trpc'
+//import { trpc } from './lib/trpc'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { MainLayout } from './layouts'
+import { HomePage, LoginPage } from './pages'
 
 function App() {
-  const { isLoading } = trpc.getTest.useQuery()
-  const fa = 34
-  if (fa) {
-    console.log(':DFa')
-  }
-  return (
-    <div>
-      {isLoading ? 'Is loading' : null}
-      <h1>Hello world</h1>
-    </div>
-  )
+  const routes = createBrowserRouter([
+    {
+      path: '/',
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+        {
+          path: 'login',
+          element: <LoginPage />,
+        },
+      ],
+    },
+  ])
+  return <RouterProvider router={routes}></RouterProvider>
 }
 
 export default App
