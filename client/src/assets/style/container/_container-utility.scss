@@ -1,0 +1,85 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:list';
+@use '../breakpoints/breakpoints-variables' as *;
+
+// Container breakpoints with max-widths
+$container-breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl,
+);
+
+$container-max-widths: (
+  'sm': 540px,
+  'md': 720px,
+  'lg': 1024px,
+  'xl': 1200px,
+  'xxl': 1320px,
+);
+
+// Percentage scales for custom containers
+$percentage-scales: 95, 90, 85, 80, 75;
+
+// Default container
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  // Apply max-widths for each breakpoint
+  @each $breakpoint, $max-width in $container-max-widths {
+    @media (min-width: $max-width) {
+      max-width: map.get($container-max-widths, $breakpoint);
+    }
+  }
+}
+
+// Responsive containers (container-{breakpoint})
+@each $breakpoint, $bp-min in $container-breakpoints {
+  $max-width: map.get($container-max-widths, $breakpoint);
+
+  .container-#{$breakpoint} {
+    width: 100%;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (min-width: $bp-min) {
+      max-width: $max-width;
+    }
+  }
+}
+
+// Percentage-based containers (container-{breakpoint}-{percentage})
+@each $breakpoint, $bp-min in $container-breakpoints {
+  @each $percentage in $percentage-scales {
+    @media (min-width: $bp-min) {
+      .container-#{$breakpoint}-#{$percentage} {
+        $percent-value: math.percentage($percentage * 0.01);
+        width: $percent-value;
+        padding-left: math.div(100% - $percent-value, 2);
+        padding-right: math.div(100% - $percent-value, 2);
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+}
+
+.container-fluid {
+  width: 100%; /* Full width */
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: $md) {
+    /* Adjust for mobile/tablet */
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

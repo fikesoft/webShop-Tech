@@ -1,0 +1,18 @@
+@use './reboot/_reboot' as *;
+@use './colors/_color-utilities' as *;
+@use './display/_display-utilities' as *;
+@use './align-text/_align-text-utilities' as *;
+@use './gap/_gap-utilities' as *;
+@use './margin/_margin-utilities' as *;
+@use './padding/_padding-utilities' as *;
+@use './sizing/_sizing-utilities' as *;
+@use './overflow/_overflow-utilities' as *;
+@use './border-radius/_border-radius-utility' as *;
+@use './border/_border-utility' as *;
+@use './container/_container-utility' as *;
+@use './row-col/_row-col' as *;
+@use './font/_font-utility' as *;
+
+body {
+  @include font-base($font: 'primary', $size: 16px, $color: #202020);
+}

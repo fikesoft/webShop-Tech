@@ -1,0 +1,53 @@
+@use '../../../assets//style//colors/colors-variables' as *;
+.menuActions {
+  display: flex;
+  justify-content: end;
+  gap: 48px;
+  .menuItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -24px;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 32px;
+      background-color: #ccc;
+    }
+
+    // Desktop-specific styles
+    @media (min-width: 1024px) {
+      // Hide separator for first visible item (second in DOM)
+      &:nth-child(2)::after {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .menuActions {
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-color: $surface-black-1;
+    margin-bottom: 16px;
+    color: white;
+    top: 0px;
+    left: 0px;
+    gap: 0px;
+    .menuItem {
+      padding: 12px 8px; // Reduced padding for mobile
+      flex: 1; // Equal width distribution
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

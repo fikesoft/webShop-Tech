@@ -1,0 +1,79 @@
+@use 'sass:map';
+
+$surface-grey-1: #fdfdfd;
+$surface-grey-2: #f9f9f9;
+$surface-black-1: #202020;
+$grey: (
+  'first': #fdfdfd,
+  'second': #f9f9f9,
+  'third': rgba(0, 0, 0, 0.1),
+);
+
+// Blue
+$blue: (
+  'light': #e8fbfd,
+  'light-hover': #ddf9fb,
+  'light-active': #b8f3f7,
+  'normal': #1ad7e6,
+  'normal-hover': #17c2cf,
+  'normal-active': #15acb8,
+  'dark': #14a1ad,
+  'dark-hover': #10818a,
+  'dark-active': #0c6167,
+  'darker': #094b51,
+);
+
+// Red
+$red: (
+  'light': #feece6,
+  'light-hover': #fde3e1,
+  'light-active': #fac5c1,
+  'normal': #f04438,
+  'normal-hover': #d83d32,
+  'normal-active': #c0362d,
+  'dark': #b4332a,
+  'dark-hover': #902922,
+  'dark-active': #6c1f19,
+  'darker': #541814,
+);
+
+// Green
+$green: (
+  'light': #e8f1ec,
+  'light-hover': #dcebe3,
+  'light-active': #b7d5c5,
+  'normal': #167743,
+  'normal-hover': #146b3c,
+  'normal-active': #125f36,
+  'dark': #115932,
+  'dark-hover': #0d4728,
+  'dark-active': #0a361e,
+  'darker': #094b51,
+);
+
+// Orange
+$orange: (
+  'light': #fef4e6,
+  'light-hover': #feeeda,
+  'light-active': #fdddb3,
+  'normal': #f79009,
+  'normal-hover': #de8208,
+  'normal-active': #c67307,
+  'dark': #b96c07,
+  'dark-hover': #945605,
+  'dark-active': #6f4104,
+  'darker': #563203,
+);
+
+// Meta-map to organize color groups
+$all-colors: (
+  'blue': $blue,
+  'red': $red,
+  'green': $green,
+  'orange': $orange,
+  'grey': $grey,
+);
+
+// Primary/Secondary mappings (optional)
+$primary: map.get($blue, 'normal');
+$secondary: map.get($red, 'normal');

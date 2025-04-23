@@ -1,0 +1,60 @@
+@use '../breakpoints/breakpoints-variables' as *;
+
+// Text alignment utilities
+$text-alignments: (
+  'left': left,
+  'center': center,
+  'right': right,
+  'justify': justify,
+  'start': start,
+  'end': end,
+);
+
+// Vertical alignment utilities
+$vertical-alignments: (
+  'top': top,
+  'middle': middle,
+  'bottom': bottom,
+  'baseline': baseline,
+);
+
+// Horizontal text alignment
+@each $key, $value in $text-alignments {
+  .text-#{$key} {
+    text-align: $value !important;
+  }
+}
+
+// Vertical alignment (for inline elements/table cells)
+@each $key, $value in $vertical-alignments {
+  .align-#{$key} {
+    vertical-align: $value !important;
+  }
+}
+
+// Responsive text alignment
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl,
+);
+
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    // Horizontal alignment
+    @each $key, $value in $text-alignments {
+      .text-#{$breakpoint}-#{$key} {
+        text-align: $value !important;
+      }
+    }
+
+    // Vertical alignment
+    @each $key, $value in $vertical-alignments {
+      .align-#{$breakpoint}-#{$key} {
+        vertical-align: $value !important;
+      }
+    }
+  }
+}

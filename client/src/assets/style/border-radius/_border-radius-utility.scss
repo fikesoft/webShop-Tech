@@ -1,0 +1,61 @@
+@use 'sass:math';
+@use 'sass:map';
+@use '../breakpoints/breakpoints-variables' as *;
+
+// Border-radius scales
+@function generate-radius-scale($unit, $max, $step) {
+  $scale: ();
+  @for $i from 0 through (math.div($max, $step)) {
+    $key: $i * $step;
+    $value: #{$key}#{$unit};
+    $scale: map.merge(
+      $scale,
+      (
+        $key: $value,
+      )
+    );
+  }
+  @return $scale;
+}
+
+// Define pixel and percentage scales
+$radius-pixel-scale: generate-radius-scale('px', 50, 5); // 0-50px in 5px steps
+$radius-percentage-scale: generate-radius-scale('%', 50, 5); // 0-50% in 5% steps
+
+// Base border-radius classes
+@each $size, $value in $radius-percentage-scale {
+  .b-r-#{$size} {
+    border-radius: $value !important;
+  }
+}
+
+@each $size, $value in $radius-pixel-scale {
+  .b-r-#{$size}x {
+    border-radius: $value !important;
+  }
+}
+
+// Responsive border-radius classes
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl,
+);
+
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    @each $radius, $value in $radius-percentage-scale {
+      .b-r-#{$breakpoint}-#{$radius} {
+        border-radius: $value !important;
+      }
+    }
+
+    @each $radius, $value in $radius-pixel-scale {
+      .b-r-#{$breakpoint}-#{$radius}x {
+        border-radius: $value !important;
+      }
+    }
+  }
+}

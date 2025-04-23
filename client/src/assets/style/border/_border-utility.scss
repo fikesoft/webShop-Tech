@@ -1,0 +1,58 @@
+@use 'sass:map';
+@use 'sass:string';
+@use '../breakpoints/breakpoints-variables' as *;
+
+// Border widths (1x = 1px)
+$border-widths: (
+  '1x': 1px,
+  '2x': 2px,
+  '3x': 3px,
+  '4x': 4px,
+  '5x': 5px,
+);
+
+// Border styles
+$border-styles: solid, dashed, dotted, double;
+
+// Color system
+$colors: (
+  'primary': rgba(0, 0, 0, 0.3),
+);
+
+// Base border utilities
+@each $width in map.keys($border-widths) {
+  $width-value: map.get($border-widths, $width);
+
+  @each $style in $border-styles {
+    @each $color in map.keys($colors) {
+      .b-#{$width}-#{$style}-#{$color} {
+        border: $width-value $style map.get($colors, $color) !important;
+      }
+    }
+  }
+}
+
+// Responsive border utilities
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl,
+);
+
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    @each $width in map.keys($border-widths) {
+      $width-value: map.get($border-widths, $width);
+
+      @each $style in $border-styles {
+        @each $color in map.keys($colors) {
+          .b-#{$breakpoint}-#{$width}-#{$style}-#{$color} {
+            border: $width-value $style map.get($colors, $color) !important;
+          }
+        }
+      }
+    }
+  }
+}

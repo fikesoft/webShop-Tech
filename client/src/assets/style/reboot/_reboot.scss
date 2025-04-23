@@ -1,0 +1,78 @@
+/* _reboot.scss */
+
+/* Box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin/padding and set all elements to inherit line-height */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%; /* Prevent font size adjustment on zoom */
+  -ms-text-size-adjust: 100%;
+}
+
+/* Remove list styles */
+ol,
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove all default anchor styling */
+a {
+  text-decoration: none;
+  color: inherit; /* Ensure links inherit color */
+}
+
+/* Remove the default border for form elements */
+input,
+button,
+select,
+textarea {
+  border: none;
+  outline: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Remove default styling for images and set them to display block */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Apply a consistent box-sizing for all elements */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default table spacing */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+p {
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}

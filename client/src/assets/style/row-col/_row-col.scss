@@ -1,0 +1,93 @@
+@use 'sass:math';
+@use '../breakpoints/breakpoints-variables' as *;
+
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl,
+);
+// Variables del sistema de cuadrícula
+$grid-columns: 12;
+$grid-gutter: 24px;
+
+// Sistema de filas
+.row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  margin-left: math.div(-$grid-gutter, 2) !important;
+  margin-right: math.div(-$grid-gutter, 2) !important;
+}
+
+// Sistema de columnas base
+@for $i from 1 through $grid-columns {
+  $width: math.div(100%, $grid-columns) * $i;
+  .col-#{$i} {
+    flex: 0 0 $width !important;
+    max-width: $width !important;
+    padding-left: math.div($grid-gutter, 2);
+    padding-right: math.div($grid-gutter, 2);
+  }
+}
+
+// Columnas responsivas
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    @for $i from 1 through $grid-columns {
+      $width: math.div(100%, $grid-columns) * $i;
+      .col-#{$breakpoint}-#{$i} {
+        flex: 0 0 $width !important;
+        max-width: $width !important;
+      }
+    }
+  }
+}
+
+// Columna automática
+.col-auto {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: none !important;
+  padding-left: math.div($grid-gutter, 2);
+  padding-right: math.div($grid-gutter, 2);
+}
+
+// Columna automática responsiva
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    .col-#{$breakpoint}-auto {
+      flex: 0 0 auto !important;
+      width: auto !important;
+      max-width: none !important;
+    }
+  }
+}
+
+// Sistema de offsets
+@for $i from 1 through $grid-columns {
+  $margin: math.div(100%, $grid-columns) * $i;
+  .offset-#{$i} {
+    margin-left: $margin !important;
+  }
+}
+
+// Offsets responsivos
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    @for $i from 1 through $grid-columns {
+      $margin: math.div(100%, $grid-columns) * $i;
+      .offset-#{$breakpoint}-#{$i} {
+        margin-left: $margin !important;
+      }
+    }
+  }
+}
+
+// Columna base para dispositivos móviles
+.col {
+  flex: 0 0 100% !important;
+  max-width: 100% !important;
+  padding-left: math.div($grid-gutter, 2);
+  padding-right: math.div($grid-gutter, 2);
+}

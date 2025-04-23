@@ -1,0 +1,44 @@
+@use 'sass:map';
+@use '../breakpoints/breakpoints-variables' as *;
+
+// Overflow settings
+$overflows: (
+  'auto': auto,
+  'hidden': hidden,
+  'visible': visible,
+  'scroll': scroll,
+);
+
+// Overflow directions
+$overflow-directions: ('overflow', 'overflow-x', 'overflow-y');
+
+// Breakpoints system
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl,
+);
+
+// Base overflow utilities
+@each $direction in $overflow-directions {
+  @each $name, $value in $overflows {
+    .#{$direction}-#{$name} {
+      #{$direction}: $value !important;
+    }
+  }
+}
+
+// Responsive overflow utilities
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    @each $direction in $overflow-directions {
+      @each $name, $value in $overflows {
+        .#{$direction}-#{$breakpoint}-#{$name} {
+          #{$direction}: $value !important;
+        }
+      }
+    }
+  }
+}

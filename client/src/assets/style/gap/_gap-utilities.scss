@@ -1,0 +1,70 @@
+@use 'sass:map';
+@use 'sass:math';
+@use '../breakpoints/breakpoints-variables' as *;
+
+// Unified scale generator (from your previous code)
+@function generate-scale($unit, $max, $step) {
+  $scale: ();
+  @for $i from 0 through (math.div($max, $step)) {
+    $key: $i * $step;
+    $value: #{$key}#{$unit};
+    $scale: map.merge(
+      $scale,
+      (
+        $key: $value,
+      )
+    );
+  }
+  @return $scale;
+}
+
+// Define gap scales
+$gap-scale: generate-scale('px', 100, 2);
+
+// Gap utilities
+@each $size, $value in $gap-scale {
+  // Shorthand gap with 'x' suffix
+  .gap-#{$size}x {
+    gap: $value !important;
+  }
+
+  // Vertical gap
+  .gapv-#{$size}x {
+    row-gap: $value !important;
+  }
+
+  // Horizontal gap
+  .gaph-#{$size}x {
+    column-gap: $value !important;
+  }
+}
+
+// Responsive gap utilities
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl,
+);
+
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    @each $gap, $value in $gap-scale {
+      // Shorthand gap
+      .gap-#{$breakpoint}-#{$gap}x {
+        gap: $value !important;
+      }
+
+      // Vertical gap
+      .gapv-#{$breakpoint}-#{$gap}x {
+        row-gap: $value !important;
+      }
+
+      // Horizontal gap
+      .gaph-#{$breakpoint}-#{$gap}x {
+        column-gap: $value !important;
+      }
+    }
+  }
+}

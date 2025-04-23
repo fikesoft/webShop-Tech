@@ -1,0 +1,101 @@
+@use 'sass:math';
+@use 'sass:map';
+@use '../breakpoints/breakpoints-variables' as *;
+
+// Unified scale generator
+@function generate-scale($unit, $max, $step) {
+  $scale: ();
+  @for $i from 0 through (math.div($max, $step)) {
+    $key: $i * $step;
+    $value: #{$key}#{$unit};
+    $scale: map.merge(
+      $scale,
+      (
+        $key: $value,
+      )
+    );
+  }
+  @return $scale;
+}
+
+// Define scales
+$percentage-scale: generate-scale('%', 100, 5);
+$pixel-scale: generate-scale('px', 100, 2);
+$vw-scale: generate-scale('vw', 100, 5);
+$vh-scale: generate-scale('vh', 100, 5);
+
+// Sizing properties
+$size-properties: (
+  'w': 'width',
+  'h': 'height',
+  'mw': 'max-width',
+  'mh': 'max-height',
+  'minw': 'min-width',
+  'minh': 'min-height',
+);
+
+// Generate base utilities
+@each $prop, $css-prop in $size-properties {
+  @each $scale-type in ('percentage', 'pixel', 'vw', 'vh') {
+    $scale: ();
+    $suffix: '';
+
+    @if $scale-type == 'percentage' {
+      $scale: $percentage-scale;
+    } @else if $scale-type == 'pixel' {
+      $scale: $pixel-scale;
+      $suffix: 'x';
+    } @else if $scale-type == 'vw' {
+      $scale: $vw-scale;
+      $suffix: 'vw';
+    } @else if $scale-type == 'vh' {
+      $scale: $vh-scale;
+      $suffix: 'vh';
+    }
+
+    @each $size, $value in $scale {
+      .#{$prop}-#{$size}#{$suffix} {
+        #{$css-prop}: $value !important;
+      }
+    }
+  }
+}
+
+// Generate responsive utilities
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl,
+);
+
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    @each $prop, $css-prop in $size-properties {
+      @each $scale-type in ('percentage', 'pixel', 'vw', 'vh') {
+        $scale: ();
+        $suffix: '';
+
+        @if $scale-type == 'percentage' {
+          $scale: $percentage-scale;
+        } @else if $scale-type == 'pixel' {
+          $scale: $pixel-scale;
+          $suffix: 'x';
+        } @else if $scale-type == 'vw' {
+          $scale: $vw-scale;
+          $suffix: 'vw';
+        } @else if $scale-type == 'vh' {
+          $scale: $vh-scale;
+          $suffix: 'vh';
+        }
+
+        @each $size, $value in $scale {
+          .#{$prop}-#{$breakpoint}-#{$size}#{$suffix} {
+            #{$css-prop}: $value !important;
+          }
+        }
+      }
+    }
+  }
+}

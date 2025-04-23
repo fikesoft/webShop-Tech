@@ -1,0 +1,105 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:map';
+@use '../breakpoints/breakpoints-variables' as *;
+
+// Reduced margin scale (0-100px in 10px increments with 'x' suffix)
+@function generate-margin-scale() {
+  $scale: ();
+  @for $i from 0 through 10 {
+    $key: #{$i * 10}x;
+    $value: #{$i * 10}px;
+    $scale: map.merge(
+      $scale,
+      (
+        $key: $value,
+      )
+    );
+  }
+  @return $scale;
+}
+
+$margin-scale: generate-margin-scale();
+
+// Margin directions
+$margin-directions: (
+  'm': (
+    'margin',
+  ),
+  'mt': (
+    'margin-top',
+  ),
+  'mr': (
+    'margin-right',
+  ),
+  'mb': (
+    'margin-bottom',
+  ),
+  'ml': (
+    'margin-left',
+  ),
+  'mx': (
+    'margin-left',
+    'margin-right',
+  ),
+  'my': (
+    'margin-top',
+    'margin-bottom',
+  ),
+);
+
+// Base margin utilities
+@each $dir, $properties in $margin-directions {
+  @each $size, $value in $margin-scale {
+    .#{$dir}-#{$size} {
+      @each $prop in $properties {
+        #{$prop}: $value !important;
+      }
+    }
+  }
+
+  // Double-value margins (only for shorthand 'm')
+  @if $dir == 'm' {
+    @each $v, $v-val in $margin-scale {
+      @each $h, $h-val in $margin-scale {
+        .#{$dir}-#{$v}-#{$h} {
+          margin: $v-val $h-val !important;
+        }
+      }
+    }
+  }
+}
+
+// Responsive margin utilities
+$breakpoints: (
+  'sm': $sm,
+  'md': $md,
+  'lg': $lg,
+  'xl': $xl,
+  'xxl': $xxl,
+);
+
+@each $breakpoint, $size in $breakpoints {
+  @media (min-width: $size) {
+    @each $dir, $properties in $margin-directions {
+      @each $size, $value in $margin-scale {
+        .#{$dir}-#{$breakpoint}-#{$size} {
+          @each $prop in $properties {
+            #{$prop}: $value !important;
+          }
+        }
+      }
+
+      // Responsive double-value margins
+      @if $dir == 'm' {
+        @each $v, $v-val in $margin-scale {
+          @each $h, $h-val in $margin-scale {
+            .#{$dir}-#{$breakpoint}-#{$v}-#{$h} {
+              margin: $v-val $h-val !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
