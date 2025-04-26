@@ -1,0 +1,15 @@
+@mixin closeMenu($bg-color: rgba(#000000, 0.5), $padding: 11px, $icon-size: 20px) {
+  border-radius: 50%;
+  background-color: $bg-color;
+  padding: $padding;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  .icon {
+    width: $icon-size;
+    height: $icon-size;
+    fill: white;
+  }
+}

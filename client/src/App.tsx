@@ -1,7 +1,7 @@
 //import { trpc } from './lib/trpc'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { MainLayout } from './layouts'
-import { HomePage, LoginPage } from './pages'
+import { HomePage } from './pages'
 import './assets/style/index.scss'
 function App() {
   const routes = createBrowserRouter([
@@ -12,10 +12,6 @@ function App() {
         {
           index: true,
           element: <HomePage />,
-        },
-        {
-          path: 'login',
-          element: <LoginPage />,
         },
       ],
     },

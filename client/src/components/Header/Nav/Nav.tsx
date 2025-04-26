@@ -3,8 +3,11 @@ import style from './nav.module.scss'
 import classNames from 'classnames'
 const Nav = () => {
   return (
-    <nav className="d-lg-block d-none w-50">
-      <ul className={classNames(style.navMenu, 'd-flex gap-24x')}>
+    <nav>
+      <ul className={classNames(style.navMenu, 'd-flex gap-24x  small-paragraph')}>
+        <li className="d-lg-none d-flex">
+          <a>Catalog</a>
+        </li>
         <li>
           <a>Contacte</a>
         </li>

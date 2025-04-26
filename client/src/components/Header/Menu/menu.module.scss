@@ -1,0 +1,30 @@
+@use '../../../assets//style/mixins/mixins' as *;
+.menuContainer {
+  display: none; // Hidden by default
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  z-index: 999; // Ensure it's above other elements
+
+  .headerMenu {
+    padding: 16px;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+    .closeMenu {
+      @include closeMenu();
+    }
+  }
+
+  .menuContent {
+    padding: 20px; // Add padding for the menu content
+  }
+}
+
+.menuContainerOpen {
+  display: block; // Show the menu when this class is applied
+}

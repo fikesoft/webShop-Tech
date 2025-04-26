@@ -6,7 +6,7 @@ const Search = () => {
     <div
       className={classNames(
         style.wrapperInput,
-        'd-flex a-i-center j-c-between bg-grey-second b-1x-solid-primary b-r-lg-30x b-r-0x h-50x p-10x',
+        'd-flex a-i-center j-c-between b-1x-solid-primary b-r-lg-30x b-r-0x h-50x p-10x bg-grey-second'
       )}
     >
       <input

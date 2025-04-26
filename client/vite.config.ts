@@ -32,7 +32,7 @@ export default defineConfig(({ command }): UserConfig => {
           ],
         },
         defaultExtractor: (content) => content.match(/[\w-/:]+/g) || [],
-      }),
+      })
     )
   }
 
@@ -47,7 +47,7 @@ export default defineConfig(({ command }): UserConfig => {
           colormin: false,
         },
       ],
-    }) as import('postcss').AcceptedPlugin,
+    }) as import('postcss').AcceptedPlugin
   )
 
   return {

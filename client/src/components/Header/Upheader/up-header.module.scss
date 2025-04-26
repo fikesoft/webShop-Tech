@@ -1,15 +1,21 @@
-@use '../../../assets/style/colors//colors-variables' as *;
+@use '../../../assets/style/colors/colors-variables' as *;
 
-.containerUpheader {
+.container {
   background-color: $surface-grey-2;
   .firstCircle {
     position: relative;
     z-index: 1;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
   }
   .secondCircle {
     position: absolute;
     z-index: 2;
     top: 5px;
     left: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
   }
 }

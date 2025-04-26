@@ -1,0 +1,27 @@
+.menuWrapper {
+  padding: 24px 0px 48px 0px;
+}
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 16px;
+  background-color: white;
+  border-radius: 16px;
+}
+
+@media (max-width: 1024px) {
+  ul {
+    overflow-x: scroll;
+
+    .menuItem {
+      flex-direction: column;
+      min-width: 140px; // 👈 This is the key
+      gap: 16px;
+      align-items: start;
+      padding: 16px 16px 36px 16px;
+      background-color: white;
+      border-radius: 16px;
+    }
+  }
+}

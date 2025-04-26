@@ -59,7 +59,6 @@ export default [
       // Add additional custom rules here
       curly: ['error', 'all'], // Require curly braces for all control statements
       quotes: ['error', 'single', { avoidEscape: true }], // Enforce single quotes
-      'comma-dangle': ['error', 'always-multiline'], // Require or disallow trailing commas
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }], // Disallow unused variables
       'no-trailing-spaces': 'error', // Disallow trailing whitespace
       indent: ['error', 2, { SwitchCase: 1 }], // Enforce consistent indentation

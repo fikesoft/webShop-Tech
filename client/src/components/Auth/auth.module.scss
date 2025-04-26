@@ -1,0 +1,108 @@
+@use '../../assets/style/mixins/mixins' as *;
+@use '../../assets/style/colors/color-utilities' as *;
+
+@use '../../assets/style/mixins/mixins';
+@use '../../assets/style/colors/color-utilities';
+.wrapperAuth {
+  position: fixed;
+  inset: 0; // top/right/bottom/left: 0
+  background-color: rgba(#202020, 0.5);
+  z-index: 999;
+}
+.wrapperContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%; // remove if you want auto width
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  max-width: 480px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.closeMenu {
+  @include closeMenu();
+}
+
+.containerAuth {
+  padding: 0 24px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wrapperInput {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 16px;
+  border: 1px solid rgba(#000, 0.1);
+  border-radius: 20px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+  }
+
+  &.active {
+    @extend .bg-blue-light;
+    border-color: #1ad7e6;
+  }
+
+  &:not(.active):hover {
+    background: rgba(#1ad7e6, 0.1);
+  }
+}
+
+.authInput {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  input {
+    padding: 14px 16px;
+    border: 1px solid rgba(#000, 0.1);
+    border-radius: 6px;
+  }
+}
+
+.buttonAuth {
+  border-radius: 48px;
+  padding: 14px 0px;
+}
+.gapLine {
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: rgba(#000, 0.1);
+  }
+
+  &::before {
+    margin-right: 8px;
+  }
+  &::after {
+    margin-left: 8px;
+  }
+}
