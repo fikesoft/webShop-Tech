@@ -1,4 +1,4 @@
-import type { TrpcRouter } from '@ivishop/backend/src/trpc'
+import type { TrpcRouter } from '@ivishop/backend/src/routes/index'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createTRPCReact, httpBatchLink } from '@trpc/react-query'
 

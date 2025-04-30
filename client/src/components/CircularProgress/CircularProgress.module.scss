@@ -1,0 +1,44 @@
+@keyframes cp-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cp-dash {
+  0% {
+    stroke-dashoffset: 0%;
+  }
+  50% {
+    stroke-dashoffset: -25%;
+  }
+  100% {
+    stroke-dashoffset: -100%;
+  }
+}
+
+.indeterminate {
+  animation: cp-rotate 1.4s linear infinite;
+  transform-origin: center center;
+  transform-box: fill-box;
+
+  /* Target the child .indicator for the dash animation */
+  & .indicator {
+    animation: cp-dash 1.4s ease-in-out infinite;
+  }
+}
+
+.track {
+  fill: none;
+  stroke: #10818a;
+}
+
+.indicator {
+  fill: none;
+  transform-origin: center center;
+  transform-box: fill-box;
+  transform: rotate(-90deg);
+  /* no transition here in indeterminate mode, animation handles it */
+}
