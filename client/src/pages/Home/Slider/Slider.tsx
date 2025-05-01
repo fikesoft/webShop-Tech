@@ -44,7 +44,7 @@ const Slider = () => {
         {photosSlider.map((object, index) => (
           <div
             className={
-              indexImg == index
+              indexImg === index
                 ? classNames(style.sliderOptionSelected, 'bg-blue-normal ')
                 : classNames(style.sliderOption, 'bg-blue-normal ')
             }

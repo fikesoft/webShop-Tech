@@ -1,4 +1,3 @@
-// lib/hooks/useRegisterUser.ts
 import { useState } from 'react'
 import { trpc } from '../trpc'
 import { ResponseError } from '../types'
@@ -29,5 +28,6 @@ export const useRegisterUser = () => {
     data: mutation.data,
     error: mutation.error,
     errorMessages,
+    reset: mutation.reset,
   }
 }

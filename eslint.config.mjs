@@ -59,7 +59,18 @@ export default [
       // Add additional custom rules here
       curly: ['error', 'all'], // Require curly braces for all control statements
       quotes: ['error', 'single', { avoidEscape: true }], // Enforce single quotes
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }], // Disallow unused variables
+      // 1) Turn off ESLint’s built-in no-unused-vars (it can’t see TS mapped types)
+      'no-unused-vars': 'off',
+
+      // 2) Enable the TS-aware version, and ignore any identifiers starting with "_"
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_', // function args prefixed _ are ignored
+          varsIgnorePattern: '^_', // variables prefixed _ are ignored
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
       'no-trailing-spaces': 'error', // Disallow trailing whitespace
       indent: ['error', 2, { SwitchCase: 1 }], // Enforce consistent indentation
       'space-before-blocks': ['error', 'always'], // Require a space before blocks
@@ -76,7 +87,7 @@ export default [
       'prefer-arrow-callback': 'error', // Suggest using arrow functions as callbacks
       'max-len': ['error', { code: 120 }], // Enforce a maximum line length
       '@typescript-eslint/no-explicit-any': 'warn', // Warn against using `any` type in TypeScript
-      '@typescript-eslint/explicit-module-boundary-types': 'warn', // Warn if function return types are not explicitly defined
+      //'@typescript-eslint/explicit-module-boundary-types': 'warn', // Warn if function return types are not explicitly defined
       'arrow-spacing': ['error', { before: true, after: true }],
       'brace-style': ['error', 'stroustrup', { allowSingleLine: false }],
     },

@@ -8,10 +8,10 @@ import useAppSelector from '../../store/hooks/useSelector'
 import useAppDispatch from '../../store/hooks/useDispach'
 import { toggleMenuLogin } from '../../store/slices/menuSlice'
 import { useRegisterUser } from '../../lib/hooks/useRegisterUser'
+import { useLoginUser } from '../../lib/hooks/useLoginUser'
 import { CircularProgress } from '../CircularProgress/CircularProgress'
 import IconTick from '../../assets/img/Icon-Tick.svg?react'
-//MAIN ERROR WHEN THE LOGIN SUCCESED THEN THE GREEN DOES NOT RESET
-//Do better the reset
+
 const Auth: React.FC = () => {
   const dispatch = useAppDispatch()
   const { menuOpenLogin } = useAppSelector((s) => s.menu)
@@ -23,9 +23,28 @@ const Auth: React.FC = () => {
   const [remember, setRemember] = useState(false)
   const [selected, setSelected] = useState<'login' | 'register'>('login')
 
-  const { register, isError, isLoading, isSuccess, errorMessages } = useRegisterUser()
+  // register hook (aliased)
+  const {
+    register,
+    isLoading: regLoading,
+    isError: regError,
+    isSuccess: regSuccess,
+    errorMessages: regFieldErrors,
+    reset: resetRegister,
+  } = useRegisterUser()
 
-  // reset all form fields and selection
+  // login hook (aliased)
+  const {
+    login,
+    isLoading: loginLoading,
+    isError: loginError,
+    isSuccess: loginSuccess,
+    errorMessages: loginFieldErrors,
+    logicError,
+    reset: resetLogin,
+  } = useLoginUser()
+
+  // reset form fields + selection
   const resetForm = useCallback(() => {
     setEmail('')
     setPassword('')
@@ -34,26 +53,34 @@ const Auth: React.FC = () => {
     setSelected('login')
   }, [])
 
-  // on success: wait 1s, then close menu & reset form
+  // when *either* succeeds, close + reset everything
   useEffect(() => {
-    if (isSuccess) {
+    if (loginSuccess || regSuccess) {
       const t = setTimeout(() => {
         dispatch(toggleMenuLogin())
         resetForm()
+        resetLogin()
+        resetRegister()
       }, 1000)
       return () => clearTimeout(t)
     }
-  }, [isSuccess, dispatch, resetForm])
+  }, [loginSuccess, regSuccess, dispatch, resetForm, resetLogin, resetRegister])
 
   const handleSubmit = () => {
-    if (selected === 'register') {
-      register(email, password, confirmPassword)
+    if (selected === 'login') {
+      login(email, password)
     }
     else {
-      // TODO: add login logic here
+      register(email, password, confirmPassword)
     }
-    // form will be reset by the effects, not here
   }
+
+  // pick the active hook’s flags
+  const isLoading = selected === 'login' ? loginLoading : regLoading
+  const isError = selected === 'login' ? loginError : regError
+  const isSuccess = selected === 'login' ? loginSuccess : regSuccess
+  const fieldErrors = selected === 'login' ? loginFieldErrors : regFieldErrors
+  const topError = selected === 'login' ? logicError : undefined
 
   return (
     <div className={classNames(style.wrapperAuth, menuOpenLogin ? 'd-flex' : 'd-none')}>
@@ -80,6 +107,9 @@ const Auth: React.FC = () => {
             ))}
           </div>
 
+          {/* top-level logic error (only for login) */}
+          {topError && <p className="text-red-normal paragraph-small">{topError}</p>}
+
           {/* Email */}
           <div className={style.authInput}>
             <label htmlFor="email">
@@ -92,7 +122,7 @@ const Auth: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {errorMessages?.email?.map((msg, i) => (
+            {fieldErrors?.email?.map((msg, i) => (
               <p key={i} className="text-red-normal paragraph-small">
                 {msg}
               </p>
@@ -112,14 +142,14 @@ const Auth: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {errorMessages?.password?.map((msg, i) => (
+            {fieldErrors?.password?.map((msg, i) => (
               <p key={i} className="text-red-normal paragraph-small">
                 {msg}
               </p>
             ))}
           </div>
 
-          {/* Confirm password (only on register) */}
+          {/* Confirm password (register only) */}
           {selected === 'register' && (
             <div className={style.authInput}>
               <label htmlFor="confirmPassword">
@@ -133,7 +163,7 @@ const Auth: React.FC = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-              {errorMessages?.confirmPassword?.map((msg, i) => (
+              {fieldErrors?.confirmPassword?.map((msg, i) => (
                 <p key={i} className="text-red-normal paragraph-small">
                   {msg}
                 </p>
@@ -141,7 +171,7 @@ const Auth: React.FC = () => {
             </div>
           )}
 
-          {/* Remember checkbox (only on login) */}
+          {/* Remember checkbox (login only) */}
           {selected === 'login' && (
             <label>
               <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
@@ -154,7 +184,6 @@ const Auth: React.FC = () => {
             className={classNames(
               style.buttonAuth,
               'd-flex a-i-center j-c-center',
-
               isError ? 'bg-red-normal text-white' : isSuccess ? 'bg-green-normal text-white' : 'bg-blue-normal'
             )}
             onClick={handleSubmit}
