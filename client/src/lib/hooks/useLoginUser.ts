@@ -15,15 +15,16 @@ export const useLoginUser = () => {
       const z = err.data?.zodError?.fieldErrors
       if (z != null && Object.keys(z).length > 0) {
         setErrorMessages(z as ResponseError)
-      }
-      else {
+      } else {
         setLogicError(err.message)
       }
     },
   })
+
   const login = (email: string, password: string) => {
     mutation.mutate({ email, password })
   }
+
   return {
     login,
     isLoading: mutation.status === 'pending',

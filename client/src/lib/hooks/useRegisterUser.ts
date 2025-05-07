@@ -5,14 +5,20 @@ import { ResponseError } from '../types'
 export const useRegisterUser = () => {
   // Now an object keyed by field name, or null if no errors
   const [errorMessages, setErrorMessages] = useState<ResponseError | null>(null)
+  const [logicError, setLogicError] = useState('')
 
   const mutation = trpc.users.registerUser.useMutation({
-    onSuccess: () => {
+    onMutate: () => {
       setErrorMessages(null)
+      setLogicError('')
     },
     onError: (err) => {
-      const fieldErrors = (err.data?.zodError?.fieldErrors ?? {}) as ResponseError
-      setErrorMessages(fieldErrors)
+      const z = err.data?.zodError?.fieldErrors
+      if (z != null && Object.keys(z).length > 0) {
+        setErrorMessages(z as ResponseError)
+      } else {
+        setLogicError(err.message)
+      }
     },
   })
 
@@ -28,6 +34,7 @@ export const useRegisterUser = () => {
     data: mutation.data,
     error: mutation.error,
     errorMessages,
+    logicError,
     reset: mutation.reset,
   }
 }

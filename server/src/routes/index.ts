@@ -1,4 +1,4 @@
-import { router } from '../trpc'
+import { router } from '../trpc/trpc'
 import { userRouter } from './users'
 
 export const trpcRouter = router({

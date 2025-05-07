@@ -1,7 +1,8 @@
 import { initTRPC } from '@trpc/server'
+import type { Context } from './context'
 import { ZodError } from 'zod'
 
-export const trpc = initTRPC.create({
+const t = initTRPC.context<Context>().create({
   errorFormatter({ shape, error }) {
     return {
       ...shape,
@@ -13,5 +14,6 @@ export const trpc = initTRPC.create({
   },
 })
 
-export const router = trpc.router
-export const publicProcedure = trpc.procedure
+export const router = t.router
+export const publicProcedure = t.procedure
+export const publicHashMiddleware = t.middleware

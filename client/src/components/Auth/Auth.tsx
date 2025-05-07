@@ -30,6 +30,7 @@ const Auth: React.FC = () => {
     isError: regError,
     isSuccess: regSuccess,
     errorMessages: regFieldErrors,
+    logicError: regLogicError,
     reset: resetRegister,
   } = useRegisterUser()
 
@@ -40,7 +41,7 @@ const Auth: React.FC = () => {
     isError: loginError,
     isSuccess: loginSuccess,
     errorMessages: loginFieldErrors,
-    logicError,
+    logicError: logLogicError,
     reset: resetLogin,
   } = useLoginUser()
 
@@ -69,8 +70,7 @@ const Auth: React.FC = () => {
   const handleSubmit = () => {
     if (selected === 'login') {
       login(email, password)
-    }
-    else {
+    } else {
       register(email, password, confirmPassword)
     }
   }
@@ -80,7 +80,7 @@ const Auth: React.FC = () => {
   const isError = selected === 'login' ? loginError : regError
   const isSuccess = selected === 'login' ? loginSuccess : regSuccess
   const fieldErrors = selected === 'login' ? loginFieldErrors : regFieldErrors
-  const topError = selected === 'login' ? logicError : undefined
+  const topError = selected === 'login' ? logLogicError : regLogicError
 
   return (
     <div className={classNames(style.wrapperAuth, menuOpenLogin ? 'd-flex' : 'd-none')}>

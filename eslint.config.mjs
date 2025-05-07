@@ -89,7 +89,7 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn', // Warn against using `any` type in TypeScript
       //'@typescript-eslint/explicit-module-boundary-types': 'warn', // Warn if function return types are not explicitly defined
       'arrow-spacing': ['error', { before: true, after: true }],
-      'brace-style': ['error', 'stroustrup', { allowSingleLine: false }],
+'brace-style': ['error', '1tbs', { allowSingleLine: false }]
     },
   },
 ]
