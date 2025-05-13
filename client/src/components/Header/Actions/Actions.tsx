@@ -1,26 +1,18 @@
-import IconUser from '../../../assets/img/Icon-User.svg?react'
 import IconCompare from '../../../assets/img/Icon-Compare.svg?react'
 import IconHeart from '../../../assets/img/Icon-Heart.svg?react'
 import IconCart from '../../../assets/img/Icon-Cart.svg?react'
 import style from './actions.module.scss'
 import classNames from 'classnames'
-import CatalogItem from './CatalogItem'
-import useAppDispatch from '../../../store/hooks/useDispach'
-import { toggleMenuLogin } from '../../../store/slices/menuSlice'
+import CatalogItem from './Items/CatalogItem'
+import ContItem from './Items/ContItem'
 const Actions = () => {
-  const dispatch = useAppDispatch()
-  const toggleAuthMenu = () => {
-    dispatch(toggleMenuLogin())
-  }
   return (
     <ul className={classNames(style.menuActions, 'text-center caption fw-medium b-r-15x')}>
       {/* Mobile-only item (hidden on desktop) */}
       <CatalogItem />
       {/* Regular menu items */}
-      <li className={classNames(style.menuItem)} onClick={toggleAuthMenu}>
-        <IconUser />
-        <p>Cont</p>
-      </li>
+      <ContItem />
+
       <li className={classNames(style.menuItem)}>
         <IconCompare />
         <p>Compară</p>

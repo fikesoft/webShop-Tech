@@ -40,6 +40,8 @@ export const userRouter = router({
         },
         select: {
           id: true,
+          role: true,
+          email: true,
         },
       })
       const userIdValue = user.id
@@ -59,6 +61,12 @@ export const userRouter = router({
     .mutation(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUnique({
         where: { email: input.email },
+        select: {
+          id: true,
+          role: true,
+          email: true,
+          password: true,
+        },
       })
       //Check if the user does not exist and compare the passwords
       if (!user || !(await bcrypt.compare(input.password, user.password))) {
@@ -71,38 +79,77 @@ export const userRouter = router({
       const userIdValue = user.id
       const tokens = await signTokens({ userIdValue, ctx })
       setTokenCookie(ctx.res, tokens)
-      return { user }
+
+      return {
+        user: {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+        },
+      }
     }),
   user: publicProcedure.mutation(async ({ ctx }) => {
-    if (ctx._user !== null) {
-      const user = verifyAccessToken(ctx.req.cookies['access-token'])
-      let _tokens
-      if (user !== null && user.userId !== null) {
-        const userIdValue = user.userId
-        _tokens = await signTokens({ userIdValue, ctx })
+    // Try verifying the access token first
+    const accessPayload = verifyAccessToken(ctx.req.cookies['access-token'])
+    if (accessPayload?.userId != null) {
+      const userIdValue = accessPayload.userId
+
+      // Fetch the role from the database
+      const dbUser = await ctx.prisma.user.findUnique({
+        where: { id: userIdValue },
+        select: { role: true },
+      })
+      if (!dbUser) {
+        // shouldn’t happen unless the user was deleted
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' })
       }
-      return user
-    } else {
-      //In the context we check if  the acces token exists
-      //If no then the user is null
-      //Then user refreshed could exist
-      const userRefreshed = await verifyRefreshToken(ctx.req.cookies['refresh-token'])
-      if (userRefreshed !== null && userRefreshed.userId !== null) {
-        const userIdValue = userRefreshed.userId
-        const _tokens = await signTokens({ userIdValue, ctx })
-        setTokenCookie(ctx.res, _tokens)
-        return userRefreshed
-      } else {
-        if (userRefreshed !== null && userRefreshed.userId !== null) {
-          await ctx.prisma.user.update({
-            where: { id: userRefreshed.userId },
-            data: { refreshToken: '' },
-          })
-        }
-        clearCookies(ctx)
-        return null
+
+      // Re-issue tokens
+      const tokens = await signTokens({ userIdValue, ctx })
+      setTokenCookie(ctx.res, tokens)
+
+      return {
+        user: {
+          id: userIdValue,
+          role: dbUser.role,
+        },
+        tokens,
       }
     }
+
+    // If access token expired or missing, try refresh token
+    const refreshPayload = await verifyRefreshToken({
+      token: ctx.req.cookies['refresh-token'],
+      ctx,
+    })
+    if (refreshPayload?.userId != null) {
+      const userIdValue = refreshPayload.userId
+
+      // Fetch the role again
+      const dbUser = await ctx.prisma.user.findUnique({
+        where: { id: userIdValue },
+        select: { role: true },
+      })
+      if (!dbUser) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' })
+      }
+
+      // Re-issue tokens
+      const tokens = await signTokens({ userIdValue, ctx })
+      setTokenCookie(ctx.res, tokens)
+
+      return {
+        user: {
+          id: userIdValue,
+          role: dbUser.role,
+        },
+        tokens,
+      }
+    }
+
+    // Both tokens invalid → clear cookies and return null
+    clearCookies(ctx)
+    return null
   }),
   logoutUser: publicProcedure.mutation(async ({ ctx }) => {
     if (ctx._user) {

@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import { Response } from 'express'
 import { Context } from '../context'
 import bcrypt from 'bcrypt'
+
 const ACCESS_SECRET = process.env.ACCESS_SECRET!
 const REFRESH_SECRET = process.env.REFRESH_SECRET!
 

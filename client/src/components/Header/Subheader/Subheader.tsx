@@ -6,15 +6,12 @@ import style from './subheader.module.scss'
 import classNames from 'classnames'
 import IconSearch from '../../../assets/img/Icon-Search.svg?react'
 import IconBurgher from '../../../assets/img/Icon-Burgher.svg?react'
-import Menu from '../Menu/Menu'
 import { useState } from 'react'
-import useAppSelector from '../../../store/hooks/useSelector'
 import useAppDispatch from '../../../store/hooks/useDispach'
-import { toggleMenu } from '../../../store/slices/menuSlice'
+import { openMenu } from '../../../store/slices/menuSlice'
 const Subheader = () => {
   const [inputSearchTrigger, setInputSearchTrigger] = useState(false)
   const dispatch = useAppDispatch()
-  const { menuOpen } = useAppSelector((state) => state.menu)
   const toggleInputSearch = () => {
     setInputSearchTrigger((prev) => !prev)
   }
@@ -35,7 +32,14 @@ const Subheader = () => {
             width={24}
             height={24}
             onClick={() => {
-              dispatch(toggleMenu())
+              dispatch(
+                openMenu({
+                  modalType: 'menu',
+                  title: 'Menu',
+                  headerDisplay: true,
+                  fullWindow: true,
+                })
+              )
             }}
           />
 
@@ -57,7 +61,7 @@ const Subheader = () => {
             <Actions />
           </div>
         </div>
-        {menuOpen ? <Menu /> : null}
+        {}
       </div>
     </header>
   )
