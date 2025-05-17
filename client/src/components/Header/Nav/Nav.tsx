@@ -1,26 +1,67 @@
+import { Link } from 'react-router-dom'
 import Promotion from '../Promotion/Promotion'
 import style from './nav.module.scss'
 import classNames from 'classnames'
+import useAppSelector from '../../../store/hooks/useSelector'
+import useAppDispatch from '../../../store/hooks/useDispach'
+import { closeMenu } from '../../../store/slices/menuSlice'
 const Nav = () => {
+  const disptach = useAppDispatch()
+  const { isOpen } = useAppSelector((state) => state.menu)
   return (
     <nav>
-      <ul className={classNames(style.navMenu, 'd-flex gap-24x  small-paragraph')}>
+      <ul className={classNames(style.navMenu, 'd-flex gap-24x small-paragraph')}>
         <li className="d-lg-none d-flex">
-          <a>Catalog</a>
+          <Link
+            to="/catalog"
+            onClick={() => {
+              if (isOpen) {
+                disptach(closeMenu())
+              }
+            }}
+          >
+            Catalog
+          </Link>
         </li>
         <li>
-          <a>Contacte</a>
+          <Link
+            to="/contacte"
+            onClick={() => {
+              if (isOpen) {
+                disptach(closeMenu())
+              }
+            }}
+          >
+            Contacte
+          </Link>
         </li>
         <li>
-          <a>Livrare</a>
+          <Link
+            to="/livrare"
+            onClick={() => {
+              if (isOpen) {
+                disptach(closeMenu())
+              }
+            }}
+          >
+            Livrare
+          </Link>
         </li>
         <li>
-          <a>Despre Noi</a>
+          {/* Direct Link, no extra <a> */}
+          <Link
+            to="/despre-noi"
+            onClick={() => {
+              if (isOpen) {
+                disptach(closeMenu())
+              }
+            }}
+          >
+            Despre Noi
+          </Link>
         </li>
         <li className="d-lg-none d-flex">
-          <a>
-            <Promotion />
-          </a>
+          <Promotion />
         </li>
       </ul>
     </nav>

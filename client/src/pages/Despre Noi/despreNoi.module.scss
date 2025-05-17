@@ -1,0 +1,15 @@
+.socialRow {
+  display: flex;
+  height: auto;
+  gap: 12px;
+  a {
+    display: flex;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: rgba($color: #202020, $alpha: 0.1);
+    z-index: 1;
+    svg {
+      position: relative;
+    }
+  }
+}

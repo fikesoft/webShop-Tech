@@ -1,0 +1,17 @@
+.bulletUl {
+  list-style-type: circle;
+  list-style-position: inside; // ← bullet lives inside padding, won’t be clipped
+  margin-left: 20px;
+  line-height: 1.6;
+  overflow-x: auto;
+  overflow-y: hidden;
+  ul {
+    list-style-type: circle;
+    list-style-position: inside;
+    margin-left: 20px; // indent nested lists
+  }
+
+  li {
+    display: list-item; // you already have this, but just in case
+  }
+}

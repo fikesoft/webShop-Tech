@@ -1,1 +1,5 @@
 export { default as HomePage } from './Home/Home'
+export { default as Contact } from './Contact/Contact'
+export { default as Error404 } from './Error 404/Error404'
+export { default as Livrare } from './Livrare/Livrare'
+export { default as DespreNoi } from './Despre Noi/DespreNoi'

@@ -17,7 +17,7 @@ const Subheader = () => {
   }
 
   return (
-    <header className="p-20x">
+    <header className="p-20x" style={{ backgroundColor: 'white' }}>
       <div className="container">
         <div className="row j-c-between  a-i-center a-i-lg-end gap-30x gap-xl-50x paragraph-small fw-regular">
           <IconSearch className="d-lg-none d-block " width={24} height={24} onClick={toggleInputSearch} />

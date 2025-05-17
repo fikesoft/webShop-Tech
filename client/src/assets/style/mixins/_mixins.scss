@@ -13,3 +13,32 @@
     fill: white;
   }
 }
+@mixin regularButton($background-color: white, $border-color: #1ad7e6, $radius: 48px) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+  cursor: pointer;
+  background-color: $background-color;
+  transition: all 0.2s ease;
+  border-radius: $radius;
+
+  // Unified text color logic
+  @if $border-color == #fff {
+    border: none;
+    color: #000; // Ensure readable text on light backgrounds
+
+    &:hover {
+      border: 1px solid $background-color;
+      background-color: #fff;
+      color: #000; // Maintain readable text on hover
+    }
+  } @else {
+    border: 1px solid $border-color;
+
+    &:hover {
+      background-color: $border-color;
+      color: #000;
+    }
+  }
+}

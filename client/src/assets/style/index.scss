@@ -15,4 +15,9 @@
 
 body {
   @include font-base($font: 'primary', $size: 16px, $color: #202020);
+  background-color: #f9f9f9 !important;
+}
+
+section {
+  padding: 48px 16px;
 }

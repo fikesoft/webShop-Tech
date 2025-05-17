@@ -1,0 +1,11 @@
+@use '../../assets//style/mixins//mixins' as *;
+.button {
+  @include regularButton();
+  &.buttonContinue {
+    @include regularButton(#1ad7e6, #fff);
+  }
+}
+
+.img {
+  width: 80%;
+}
