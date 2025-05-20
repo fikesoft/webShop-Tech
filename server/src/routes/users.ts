@@ -61,32 +61,30 @@ export const userRouter = router({
     .mutation(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUnique({
         where: { email: input.email },
-        select: {
-          id: true,
-          role: true,
-          email: true,
-          password: true,
-        },
+        select: { id: true, role: true, email: true, password: true, provider: true },
       })
-      //Check if the user does not exist and compare the passwords
-      if (!user || !(await bcrypt.compare(input.password, user.password))) {
+
+      // 1️⃣ Reject non-credentials accounts up front
+      if (user && user.provider !== 'credentials') {
         throw new TRPCError({
-          code: 'UNAUTHORIZED',
-          message: 'Invalid credentials',
+          code: 'FORBIDDEN',
+          message: 'Please log in via Google instead of email/password.',
         })
       }
-      //If the user login then for sure he does not have an access and refresh token
-      const userIdValue = user.id
-      const tokens = await signTokens({ userIdValue, ctx })
+
+      // 2️⃣ Now handle “user not found” or bad password
+      if (!user || !(await bcrypt.compare(input.password, user.password!))) {
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'Invalid email or password.',
+        })
+      }
+
+      // 3️⃣ Issue your tokens
+      const tokens = await signTokens({ userIdValue: user.id, ctx })
       setTokenCookie(ctx.res, tokens)
 
-      return {
-        user: {
-          id: user.id,
-          email: user.email,
-          role: user.role,
-        },
-      }
+      return { user: { id: user.id, email: user.email, role: user.role } }
     }),
   user: publicProcedure.mutation(async ({ ctx }) => {
     // Try verifying the access token first

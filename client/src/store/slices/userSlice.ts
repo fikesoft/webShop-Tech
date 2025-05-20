@@ -7,12 +7,14 @@ interface UserState {
   userId: string
   userRole: UserRole
   isAuth: boolean
+  userName: null | string
 }
 
 const initialState: UserState = {
   userId: '',
   userRole: 'guest',
   isAuth: false,
+  userName: null,
 }
 
 const userSlice = createSlice({
@@ -23,10 +25,11 @@ const userSlice = createSlice({
      * Logs a user in.
      * Payload: { userId, userRole }
      */
-    login: (state, action: PayloadAction<{ userId: string; userRole: UserRole }>) => {
+    login: (state, action: PayloadAction<{ userId: string; userRole: UserRole; userName?: string | null }>) => {
       state.userId = action.payload.userId
       state.userRole = action.payload.userRole
       state.isAuth = true
+      state.userName = action.payload.userName ?? null
     },
 
     /**

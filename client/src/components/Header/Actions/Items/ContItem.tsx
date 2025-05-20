@@ -11,10 +11,9 @@ import { login } from '../../../../store/slices/userSlice'
 import { CircularProgress } from '../../../CircularProgress/CircularProgress'
 const ContItem: React.FC = () => {
   const dispatch = useAppDispatch()
-  const { isAuth, userId } = useAppSelector((state) => state.user)
+  const { isAuth, userId, userName } = useAppSelector((state) => state.user)
   const [menuUserActions, setMenuUserActions] = useState(false)
   const { data, isSuccess, isLoading } = useUser()
-
   useEffect(() => {
     if (isSuccess && data?.user) {
       dispatch(
@@ -25,6 +24,7 @@ const ContItem: React.FC = () => {
       )
     }
   }, [isSuccess, data, dispatch])
+
   const toggleAuthMenu = () => {
     if (!isAuth) {
       dispatch(
@@ -46,7 +46,13 @@ const ContItem: React.FC = () => {
       ) : (
         <>
           <IconUser />
-          {isAuth ? <p>Hi user {userId}</p> : <p>Cont</p>}
+          {isAuth ? (
+            <p>
+              Hi {userName !== null ? null : 'user'} {userName !== null ? userName : userId}
+            </p>
+          ) : (
+            <p>Cont</p>
+          )}
           {menuUserActions && <MenuUserActions />}
         </>
       )}

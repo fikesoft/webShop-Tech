@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react'
 import style from './auth.module.scss'
 import classNames from 'classnames'
 import IconFacebook from '../../assets/img/Facebook.svg?react'
-import IconGoogle from '../../assets/img/Google.svg?react'
 import { useRegisterUser } from '../../lib/hooks/useRegisterUser'
 import { useLoginUser } from '../../lib/hooks/useLoginUser'
 import { CircularProgress } from '../CircularProgress/CircularProgress'
 import IconTick from '../../assets/img/Icon-Tick.svg?react'
-
+import GoogleBtn from './Google Button/GoogleBtn'
 interface AuthProps {
   /** Called when auth flow completes or modal should close */
   onClose: () => void
@@ -193,9 +192,7 @@ const Auth: React.FC<AuthProps> = ({ onClose }) => {
       <button className="d-flex a-i-center j-c-center gap-16x b-1x-solid-primary b-r-50x" style={{ padding: '14px 0' }}>
         <IconFacebook /> Autorizare cu Facebook
       </button>
-      <button className="d-flex a-i-center j-c-center gap-16x b-1x-solid-primary b-r-50x" style={{ padding: '14px 0' }}>
-        <IconGoogle /> Autorizare cu Google
-      </button>
+      <GoogleBtn />
     </div>
   )
 }

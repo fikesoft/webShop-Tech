@@ -1,7 +1,7 @@
 //import { trpc } from './lib/trpc'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { MainLayout } from './layouts'
-import { HomePage, Contact, Error404, Livrare, DespreNoi } from './pages'
+import { HomePage, Contact, Error404, Livrare, DespreNoi, Google } from './pages'
 import './assets/style/index.scss'
 
 function App() {
@@ -25,6 +25,15 @@ function App() {
         {
           path: 'despre-noi',
           element: <DespreNoi />,
+        },
+        {
+          path: 'auth',
+          children: [
+            {
+              path: 'google',
+              element: <Google />,
+            },
+          ],
         },
         {
           path: '*',
