@@ -7,6 +7,7 @@ interface UserState {
   userId: string
   userRole: UserRole
   isAuth: boolean
+  isLoadingData: boolean
   userName: null | string
 }
 
@@ -14,6 +15,7 @@ const initialState: UserState = {
   userId: '',
   userRole: 'guest',
   isAuth: false,
+  isLoadingData: true,
   userName: null,
 }
 
@@ -21,15 +23,29 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    /**
-     * Logs a user in.
-     * Payload: { userId, userRole }
-     */
-    login: (state, action: PayloadAction<{ userId: string; userRole: UserRole; userName?: string | null }>) => {
+    fetchUserStart(state) {
+      state.isLoadingData = true
+    },
+    fetchUserSuccess(
+      state,
+      action: PayloadAction<{
+        userId: string
+        userRole: UserRole
+        userName: string | null
+      }>
+    ) {
       state.userId = action.payload.userId
       state.userRole = action.payload.userRole
+      state.userName = action.payload.userName
       state.isAuth = true
-      state.userName = action.payload.userName ?? null
+      state.isLoadingData = false
+    },
+    fetchUserFail(state) {
+      state.isAuth = false
+      state.isLoadingData = false
+      state.userName = null
+      state.userRole = 'guest'
+      state.userId = ''
     },
 
     /**
@@ -43,5 +59,5 @@ const userSlice = createSlice({
   },
 })
 
-export const { login, logout } = userSlice.actions
+export const { fetchUserFail, fetchUserStart, fetchUserSuccess, logout } = userSlice.actions
 export default userSlice.reducer

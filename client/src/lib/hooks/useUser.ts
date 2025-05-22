@@ -4,7 +4,7 @@ import { trpc } from '../trpc'
 export const useUser = () => {
   const mutation = trpc.users.user.useMutation({
     onSuccess: () => {
-      console.log('Good ')
+      console.log('User founded')
     },
     onError: (error) => {
       console.log(error)

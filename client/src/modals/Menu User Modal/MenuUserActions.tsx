@@ -9,54 +9,83 @@ import IconUser from '../../assets/img/Icon-User.svg?react'
 import useAppSelector from '../../store/hooks/useSelector'
 import useAppDispatch from '../../store/hooks/useDispach'
 import { openMenu } from '../../store/slices/menuSlice'
-import { useLogOutUser } from '../../lib/hooks/useLogOutUser'
+import { NavLink } from 'react-router-dom'
+//import { useLogOutUser } from '../../lib/hooks/useLogOutUser'
 const MenuUserActions = () => {
   const dispatch = useAppDispatch()
-  const { userId } = useAppSelector((state) => state.user)
-  const { logoutUser } = useLogOutUser()
+  const { userId, userName } = useAppSelector((state) => state.user)
+  //const { logoutUser } = useLogOutUser()
   return (
     <div className={classNames(style.menuUser, 'paragraph-small')}>
       <div className={classNames(style.menuUserInner, 'd-flex')}>
-        <p className="fw-bold">Salut user {userId}</p>
+        <h6 className="h6 fw-medium">
+          Salut {userName !== null ? null : 'user'} {userName !== null ? userName : userId}
+        </h6>
         <ul className={classNames(style.list)}>
           <li>
-            <IconOrder />
-            Comenzile tale
+            <NavLink
+              to="/cont-personal"
+              end
+              className={({ isActive }) => classNames(style.listItem, isActive && style.active)}
+            >
+              <IconOrder />
+              Comenzile tale
+            </NavLink>
           </li>
           <li>
-            <IconUser />
-            Date personale
+            <NavLink
+              to="/cont-personal/date-personale"
+              end
+              className={({ isActive }) => classNames(style.listItem, isActive && style.active)}
+            >
+              <IconUser />
+              Date personale
+            </NavLink>
           </li>
           <li>
-            <IconScurity />
-            Securitate
+            <NavLink
+              to="/cont-personal/securitate"
+              end
+              className={({ isActive }) => classNames(style.listItem, isActive && style.active)}
+            >
+              <IconScurity />
+              Securitate
+            </NavLink>
           </li>
           <li>
-            <IconSeller />
-            Newsletter
+            <NavLink
+              to="/cont-personal/news-seller"
+              end
+              className={({ isActive }) => classNames(style.listItem, isActive && style.active)}
+            >
+              <IconSeller />
+              Newsletter
+            </NavLink>
           </li>
         </ul>
       </div>
-      <button
-        className="d-flex a-i-center gap-10x"
-        onClick={() => {
-          dispatch(
-            openMenu({
-              modalType: 'exit',
-              title: 'Deconectare',
-              headerDisplay: true,
-              fullWindow: false,
-              cancelText: 'Nu, rămân conectat',
-              confirmText: 'Da, deconectează-mă',
-              onConfirm: () => {
-                logoutUser()
-              },
-            })
-          )
-        }}
-      >
-        <IconExit /> Ieși din cont
-      </button>
+      <div className="p-10x-40x">
+        <button
+          className="d-flex a-i-center gap-10x"
+          onClick={() => {
+            dispatch(
+              openMenu({
+                modalType: 'exit',
+                title: 'Deconectare',
+                headerDisplay: true,
+                fullWindow: false,
+                cancelText: 'Nu, rămân conectat',
+                confirmText: 'Da, deconectează-mă',
+                // onConfirm: () => {
+                //   logoutUser()
+                // },
+              })
+            )
+          }}
+        >
+          <IconExit /> Ieși din cont
+        </button>
+      </div>
     </div>
   )
 }

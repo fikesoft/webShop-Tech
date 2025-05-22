@@ -78,3 +78,19 @@ $all-colors: (
 // Primary/Secondary mappings (optional)
 $primary: map.get($blue, 'normal');
 $secondary: map.get($red, 'normal');
+
+@function color($group, $shade) {
+  $group-map: map.get($all-colors, $group);
+
+  @if $group-map == null {
+    @error "Color group `#{$group}` not found in \$all-colors.";
+  }
+
+  $value: map.get($group-map, $shade);
+
+  @if $value == null {
+    @error "Shade `#{$shade}` not found in color group `#{$group}`.";
+  }
+
+  @return $value;
+}

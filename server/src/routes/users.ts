@@ -95,7 +95,10 @@ export const userRouter = router({
       // Fetch the role from the database
       const dbUser = await ctx.prisma.user.findUnique({
         where: { id: userIdValue },
-        select: { role: true },
+        select: {
+          name: true,
+          role: true,
+        },
       })
       if (!dbUser) {
         // shouldn’t happen unless the user was deleted
@@ -106,12 +109,23 @@ export const userRouter = router({
       const tokens = await signTokens({ userIdValue, ctx })
       setTokenCookie(ctx.res, tokens)
 
-      return {
-        user: {
-          id: userIdValue,
-          role: dbUser.role,
-        },
-        tokens,
+      if (dbUser.name !== null) {
+        return {
+          user: {
+            id: userIdValue,
+            role: dbUser.role,
+            name: dbUser.name,
+          },
+          tokens,
+        }
+      } else {
+        return {
+          user: {
+            id: userIdValue,
+            role: dbUser.role,
+          },
+          tokens,
+        }
       }
     }
 

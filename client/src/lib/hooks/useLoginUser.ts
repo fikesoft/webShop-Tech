@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { trpc } from '../trpc'
 import { ResponseError } from '../types'
 import useAppDispatch from '../../store/hooks/useDispach'
-import { login as loginUser } from '../../store/slices/userSlice'
+import { fetchUserSuccess } from '../../store/slices/userSlice'
 export const useLoginUser = () => {
   const [errorMessages, setErrorMessages] = useState<ResponseError | null>(null)
   const [logicError, setLogicError] = useState('')
@@ -10,9 +10,10 @@ export const useLoginUser = () => {
   const mutation = trpc.users.loginUser.useMutation({
     onSuccess: (data) => {
       dispatch(
-        loginUser({
+        fetchUserSuccess({
           userId: data.user.id.toString(),
           userRole: data.user.role,
+          userName: null,
         })
       )
     },

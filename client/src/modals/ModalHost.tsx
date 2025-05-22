@@ -10,6 +10,9 @@ import { Auth } from '../components'
 import Menu from './Menu Modal/Menu'
 import SignOut from './SignOut Modal/SignOut'
 import classNames from 'classnames'
+import { useLogOutUser } from '../lib/hooks/useLogOutUser'
+import WrongRole from './Permission Modal/WrongRole'
+import GoogleError from './Google Error Modal/GoogleError'
 // Registry mapping
 const modalRegistry: Record<
   string,
@@ -20,23 +23,31 @@ const modalRegistry: Record<
   auth: ({ onClose }) => <Auth onClose={onClose} />,
   menu: () => <Menu />,
   exit: () => <SignOut />,
+  wrongRole: () => <WrongRole />,
+  googleError: ({ errorMessage }) => <GoogleError errorMessage={errorMessage} />,
 }
 
 export function ModalHost() {
   const dispatch = useAppDispatch()
   const { isOpen, payload } = useAppSelector((state) => state.menu)
+  const { logoutUser } = useLogOutUser()
   if (!isOpen || !payload) {
     return null
   }
-
-  const { modalType, title, data = {}, onConfirm, confirmText, cancelText, headerDisplay, fullWindow } = payload
+  const { modalType, title, data = {}, confirmText, cancelText, headerDisplay, fullWindow } = payload
 
   // Close handler
   const handleClose = () => dispatch(closeMenu())
   // Confirm handler for generic modals
   const handleConfirm = () => {
-    if (onConfirm) {
-      onConfirm()
+    // if (onConfirm) {
+    //   onConfirm()
+    // }
+    switch (payload.modalType) {
+      case 'exit':
+        logoutUser()
+        break
+      // other modalTypes…
     }
     dispatch(closeMenu())
   }
