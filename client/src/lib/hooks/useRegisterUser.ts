@@ -9,11 +9,16 @@ export const useRegisterUser = () => {
   const dispatch = useAppDispatch()
   const mutation = trpc.users.registerUser.useMutation({
     onSuccess: (data) => {
+      const { id, role, email, phone, name, dateBirth } = data.returnedUser
+
       dispatch(
         fetchUserSuccess({
-          userId: data.user.id.toString(),
-          userRole: data.user.role,
-          userName: null,
+          userId: id.toString(),
+          userRole: role,
+          userName: name ?? null,
+          userEmail: email ?? null,
+          userPhone: phone ?? null,
+          userBirthDate: dateBirth ?? null,
         })
       )
     },
@@ -33,7 +38,7 @@ export const useRegisterUser = () => {
 
   const register = (email: string, password: string, confirmPassword: string) => {
     mutation.mutate({ email, password, confirmPassword })
-    return mutation.data?.user
+    return mutation.data?.returnedUser
   }
 
   return {

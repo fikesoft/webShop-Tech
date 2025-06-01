@@ -10,11 +10,16 @@ export function useGoogleAuthCallback() {
   const mutation = trpc.google.googleAuthCallback.useMutation({
     onSuccess: (data) => {
       navigate('/')
+      const { id, role, email, phone, name, dateBirth } = data.user
+
       dispatch(
         fetchUserSuccess({
-          userId: data.user.id.toString(),
-          userRole: data.user.role,
-          userName: data.user.name || null,
+          userId: id.toString(),
+          userRole: role,
+          userName: name ?? null,
+          userEmail: email ?? null,
+          userPhone: phone ?? null,
+          userBirthDate: dateBirth ?? null,
         })
       )
     },

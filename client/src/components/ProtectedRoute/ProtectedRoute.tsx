@@ -29,7 +29,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ requireAuth = false, al
   useEffect(() => {
     if (notLoggedIn && !isLoadingData) {
       navigate('/', { replace: true })
-      console.log('// 1) Fire auth-modal+redirect when needed')
       dispatch(
         openMenu({
           modalType: 'auth',
@@ -38,13 +37,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ requireAuth = false, al
         })
       )
     }
-  }, [notLoggedIn, navigate, dispatch])
+  }, [notLoggedIn, navigate, dispatch, isLoadingData])
+  //React Hook useEffect has a missing dependency: 'isLoadingData'
 
   // 2) Fire wrong-role modal+redirect when needed
   useEffect(() => {
     if (!notLoggedIn && wrongRole) {
       navigate('/', { replace: true })
-      console.log('// 2) Fire wrong-role modal+redirect when needed')
+      console.info('Fire wrong-role modal+redirect when needed')
 
       dispatch(
         openMenu({

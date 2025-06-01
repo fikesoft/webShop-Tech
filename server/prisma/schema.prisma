@@ -27,6 +27,8 @@ model User {
   provider     String   @default("credentials") // or 'google'
   name         String?
   picture      String?
+  phone        String?
+  dateBirth    String?
   refreshToken String   @default(uuid())
   createdAt    DateTime @default(now())
 }

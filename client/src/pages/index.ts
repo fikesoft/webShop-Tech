@@ -10,3 +10,6 @@ export { default as Comenzi } from './Cont Pages/Comenzi/Comenzi'
 export { default as DatePersonale } from './Cont Pages/Date Personale/DatePersonale'
 export { default as NewSeller } from './Cont Pages/NewSeller/NewSeller'
 export { default as Securitate } from './Cont Pages/Securitate/Securitate'
+
+//Empty Page
+export { default as EmptyPage } from './Empty/EmptyPage'

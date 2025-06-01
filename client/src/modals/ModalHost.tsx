@@ -22,7 +22,7 @@ const modalRegistry: Record<
 > = {
   auth: ({ onClose }) => <Auth onClose={onClose} />,
   menu: () => <Menu />,
-  exit: () => <SignOut />,
+  exit: ({ errorMessage }) => <SignOut erorMessage={errorMessage} />,
   wrongRole: () => <WrongRole />,
   googleError: ({ errorMessage }) => <GoogleError errorMessage={errorMessage} />,
 }

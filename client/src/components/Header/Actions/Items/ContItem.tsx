@@ -23,13 +23,16 @@ const ContItem: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess && data?.user) {
-      const { id, role } = data.user
-      const name = 'name' in data.user ? data.user.name : null
+      const { id, role, email, phone, name, dateBirth } = data.user
+
       dispatch(
         fetchUserSuccess({
           userId: id.toString(),
           userRole: role,
-          userName: name,
+          userName: name ?? null,
+          userEmail: email ?? null,
+          userPhone: phone ?? null,
+          userBirthDate: dateBirth ?? null,
         })
       )
     } else if (isError) {

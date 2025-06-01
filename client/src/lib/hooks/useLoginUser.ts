@@ -9,11 +9,16 @@ export const useLoginUser = () => {
   const dispatch = useAppDispatch()
   const mutation = trpc.users.loginUser.useMutation({
     onSuccess: (data) => {
+      const { id, role, email, phone, name, dateBirth } = data.user
+
       dispatch(
         fetchUserSuccess({
-          userId: data.user.id.toString(),
-          userRole: data.user.role,
-          userName: null,
+          userId: id.toString(),
+          userRole: role,
+          userName: name ?? null,
+          userEmail: email ?? null,
+          userPhone: phone ?? null,
+          userBirthDate: dateBirth ?? null,
         })
       )
     },

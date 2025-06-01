@@ -29,12 +29,14 @@
       gap: 16px;
       margin-bottom: 24px;
       .cancelButton {
+        cursor: pointer;
         border-radius: 48px;
         padding: 14px 32px;
         background-color: transparent;
         border: 1px solid #1ad7e6;
       }
       .confirmButton {
+        cursor: pointer;
         border-radius: 48px;
         padding: 14px 32px;
         background-color: #1ad7e6;

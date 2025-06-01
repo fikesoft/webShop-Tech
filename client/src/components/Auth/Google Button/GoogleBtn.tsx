@@ -20,7 +20,7 @@ export default function GoogleBtn() {
       onClick={handleClick}
       disabled={isLoading}
       className="d-flex a-i-center j-c-center gap-16x b-1x-solid-primary b-r-50x"
-      style={{ padding: '14px 0' }}
+      style={{ padding: '14px 0', cursor: 'pointer' }}
     >
       <IconGoogle />
       {isLoading ? <p>Vă redirecționăm…</p> : <p>Autorizare cu Google</p>}

@@ -1,0 +1,10 @@
+@use '../../assets//style/mixins/mixins' as *;
+.paragraph {
+  color: rgba($color: #202020, $alpha: 0.5);
+}
+.continueButton {
+  @include regularButton();
+}
+.promotionButton {
+  @include regularButton(#1ad7e6, #fff);
+}

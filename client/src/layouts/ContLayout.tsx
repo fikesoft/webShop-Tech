@@ -10,7 +10,7 @@ const ContLayout = () => {
           <aside className="col-3">
             <MenuUserActions />
           </aside>
-          <article className="col-9">
+          <article className="col-9 b-r-20x" style={{ backgroundColor: 'white' }}>
             <Outlet />
           </article>
         </div>

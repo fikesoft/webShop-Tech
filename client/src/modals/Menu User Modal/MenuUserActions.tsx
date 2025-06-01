@@ -76,9 +76,6 @@ const MenuUserActions = () => {
                 fullWindow: false,
                 cancelText: 'Nu, rămân conectat',
                 confirmText: 'Da, deconectează-mă',
-                // onConfirm: () => {
-                //   logoutUser()
-                // },
               })
             )
           }}
