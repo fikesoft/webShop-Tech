@@ -14,11 +14,13 @@ export interface MenuPayloadI {
 
 interface MenuStateI {
   isOpen: boolean
+  categoryOpen: boolean
   payload: MenuPayloadI | null
 }
 
 const initialState: MenuStateI = {
   isOpen: false,
+  categoryOpen: false,
   payload: null,
 }
 
@@ -27,15 +29,20 @@ export const menuSlice = createSlice({
   initialState,
   reducers: {
     openMenu(state, action: PayloadAction<MenuPayloadI>) {
+      state.categoryOpen = false
       state.isOpen = true
       state.payload = action.payload
     },
     closeMenu(state) {
       state.isOpen = false
+      state.categoryOpen = false
       state.payload = null
+    },
+    openCategory(state) {
+      state.categoryOpen = true
     },
   },
 })
 
-export const { openMenu, closeMenu } = menuSlice.actions
+export const { openMenu, closeMenu, openCategory } = menuSlice.actions
 export default menuSlice.reducer

@@ -4,19 +4,31 @@ import style from './nav.module.scss'
 import classNames from 'classnames'
 import useAppSelector from '../../../store/hooks/useSelector'
 import useAppDispatch from '../../../store/hooks/useDispach'
-import { closeMenu } from '../../../store/slices/menuSlice'
+import { closeMenu, openMenu } from '../../../store/slices/menuSlice'
 const Nav = () => {
   const disptach = useAppDispatch()
   const { isOpen } = useAppSelector((state) => state.menu)
   return (
     <nav>
-      <ul className={classNames(style.navMenu, 'd-flex gap-24x small-paragraph')}>
+      <ul className={classNames(style.navMenu, 'd-flex gap-24x small-paragraph overflow-hidden')}>
         <li className="d-lg-none d-flex">
           <Link
             to="/catalog"
             onClick={() => {
               if (isOpen) {
-                disptach(closeMenu())
+                disptach(
+                  openMenu({
+                    modalType: 'catalog',
+                    title: 'Catalog',
+                    headerDisplay: true,
+                    fullWindow: true,
+                    // cancelText: 'Nu, rămân conectat',
+                    // confirmText: 'Da, deconectează-mă',
+                    // data: {
+                    //   errorMessage: err.message || 'A apărut o eroare necunoscută.',
+                    // },
+                  })
+                )
               }
             }}
           >

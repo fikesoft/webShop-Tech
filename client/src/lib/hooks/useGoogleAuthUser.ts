@@ -1,4 +1,3 @@
-// lib/hooks/useGoogleAuthUser.ts
 import { trpc } from '../trpc'
 
 export function useGoogleAuthUser() {

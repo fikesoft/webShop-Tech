@@ -1,0 +1,17 @@
+.catalogList {
+  border: 1px solid rgba($color: #202020, $alpha: 0.1);
+  border-top: 0px;
+  background-color: #f9f9f9;
+  padding: 0px !important;
+  padding-bottom: 120px !important;
+  padding-top: 16px !important;
+  width: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .catalogList {
+    background-color: white;
+    border: 0px;
+  }
+}

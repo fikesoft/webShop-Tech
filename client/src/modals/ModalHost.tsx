@@ -13,6 +13,7 @@ import classNames from 'classnames'
 import { useLogOutUser } from '../lib/hooks/useLogOutUser'
 import WrongRole from './Permission Modal/WrongRole'
 import GoogleError from './Google Error Modal/GoogleError'
+import CatalogList from './Catalog Menu/Catalog List/CatalogList'
 // Registry mapping
 const modalRegistry: Record<
   string,
@@ -25,6 +26,7 @@ const modalRegistry: Record<
   exit: ({ errorMessage }) => <SignOut erorMessage={errorMessage} />,
   wrongRole: () => <WrongRole />,
   googleError: ({ errorMessage }) => <GoogleError errorMessage={errorMessage} />,
+  catalog: () => <CatalogList />,
 }
 
 export function ModalHost() {
@@ -63,7 +65,7 @@ export function ModalHost() {
           <header className="row j-c-between a-i-center gap-16x p-20x">
             <h4 className="h4 fw-medium">{title}</h4>
             <button type="button" className={style.closeMenu} onClick={handleClose}>
-              <IconClose />
+              <IconClose style={{ color: 'white' }} />
             </button>
           </header>
         ) : null}

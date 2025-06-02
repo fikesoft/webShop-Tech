@@ -1,0 +1,38 @@
+@use '../../../assets//style/colors/colors-variables' as *;
+
+.catalogItem {
+  --icon-url: none;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  padding: 8px 16px;
+  cursor: pointer;
+  padding: 10px 24px;
+
+  &:hover {
+    background-color: color('blue', 'light-hover');
+  }
+  &:active {
+    background-color: color('blue', 'light-active');
+  }
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url('../../../assets/img/Icon-arrRight.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: auto;
+  }
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: var(--icon-url);
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-right: 16px;
+  }
+}

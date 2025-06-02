@@ -1,0 +1,11 @@
+@use '../../assets//style/colors/colors-variables' as *;
+.wrapperCategory {
+  position: absolute;
+  top: 160px;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+  height: fit-content; /* or whatever max height you want */
+  background-color: white;
+  border-top: 1px solid rgba($color: #202020, $alpha: 0.1);
+}

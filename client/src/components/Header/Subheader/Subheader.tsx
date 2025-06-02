@@ -8,13 +8,17 @@ import IconSearch from '../../../assets/img/Icon-Search.svg?react'
 import IconBurgher from '../../../assets/img/Icon-Burgher.svg?react'
 import { useState } from 'react'
 import useAppDispatch from '../../../store/hooks/useDispach'
-import { openMenu } from '../../../store/slices/menuSlice'
+import { openMenu, openCategory, closeMenu } from '../../../store/slices/menuSlice'
+import useAppSelector from '../../../store/hooks/useSelector'
+import IconClose from '../../../assets/img/Icon-Close.svg?react'
 const Subheader = () => {
   const [inputSearchTrigger, setInputSearchTrigger] = useState(false)
+  const { categoryOpen } = useAppSelector((state) => state.menu)
   const dispatch = useAppDispatch()
   const toggleInputSearch = () => {
     setInputSearchTrigger((prev) => !prev)
   }
+  console.log('Subheader render — categoryOpen =', categoryOpen)
 
   return (
     <header className="p-20x" style={{ backgroundColor: 'white' }}>
@@ -42,12 +46,15 @@ const Subheader = () => {
               )
             }}
           />
-
-          <button className="col-2 d-none d-lg-flex a-i-center j-c-center b-r-50x p-10x mh-50x  gap-6x bg-blue-normal">
-            <IconCategory />
-            <p>Toate Categoriile</p>
-          </button>
-
+          <div className="col-2">
+            <button
+              className="w-100 d-none d-lg-flex a-i-center j-c-center b-r-50x p-10x mh-50x  gap-6x bg-blue-normal"
+              onClick={() => (categoryOpen ? dispatch(closeMenu()) : dispatch(openCategory()))}
+            >
+              {categoryOpen ? <IconClose style={{ color: '#202020' }} /> : <IconCategory />}
+              <p>Toate Categoriile</p>
+            </button>
+          </div>
           <div
             className={classNames(
               style.inputSearch,
