@@ -8,7 +8,7 @@ import ContItem from './Items/ContItem'
 const Actions = () => {
   return (
     <ul className={classNames(style.menuActions, 'text-center caption fw-medium b-r-15x')}>
-      {/* Mobile-only item (hidden on desktop) */}
+      {/* Mobi  le-only item (hidden on desktop) */}
       <CatalogItem />
       {/* Regular menu items */}
       <ContItem />

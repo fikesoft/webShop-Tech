@@ -5,6 +5,8 @@ import classNames from 'classnames'
 import style from './catalogList.module.scss'
 import CatalogItem from '../Catalog Item/CatalogItem'
 import { useGetAllCategories } from '../../../lib/hooks/useGetAllCategories'
+import useAppDispatch from '../../../store/hooks/useDispach'
+import { closeMenu } from '../../../store/slices/menuSlice'
 
 const CatalogList: React.FC = () => {
   const { data, isSuccess, isLoading, isError, refetch } = useGetAllCategories()
@@ -12,7 +14,21 @@ const CatalogList: React.FC = () => {
   useEffect(() => {
     refetch()
   }, [refetch])
+  const dispatch = useAppDispatch()
 
+  useEffect(() => {
+    const handleResize = () => {
+      dispatch(closeMenu())
+    }
+
+    // 1) Subscribe on mount
+    window.addEventListener('resize', handleResize)
+
+    // 2) Cleanup on unmount
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [dispatch])
   useEffect(() => {
     if (isLoading) {
       console.log('loading')

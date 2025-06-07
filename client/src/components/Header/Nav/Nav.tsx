@@ -15,21 +15,14 @@ const Nav = () => {
           <Link
             to="/catalog"
             onClick={() => {
-              if (isOpen) {
-                disptach(
-                  openMenu({
-                    modalType: 'catalog',
-                    title: 'Catalog',
-                    headerDisplay: true,
-                    fullWindow: true,
-                    // cancelText: 'Nu, rămân conectat',
-                    // confirmText: 'Da, deconectează-mă',
-                    // data: {
-                    //   errorMessage: err.message || 'A apărut o eroare necunoscută.',
-                    // },
-                  })
-                )
-              }
+              disptach(
+                openMenu({
+                  modalType: 'catalog',
+                  title: 'Catalog',
+                  headerDisplay: true,
+                  fullWindow: true,
+                })
+              )
             }}
           >
             Catalog

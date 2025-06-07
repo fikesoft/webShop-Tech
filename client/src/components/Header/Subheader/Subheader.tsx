@@ -23,12 +23,10 @@ const Subheader = () => {
   return (
     <header className="p-20x" style={{ backgroundColor: 'white' }}>
       <div className="container">
-        <div className="row j-c-between  a-i-center a-i-lg-end gap-30x gap-xl-50x paragraph-small fw-regular">
+        <div className="row j-c-between a-i-center gap-30x gap-xl-50x paragraph-small fw-regular">
           <IconSearch className="d-lg-none d-block " width={24} height={24} onClick={toggleInputSearch} />
 
-          <div className="col-2 col-lg-1 p-0x w-100">
-            <LogoPhoto />
-          </div>
+          <LogoPhoto />
 
           <IconBurgher
             className="d-lg-none d-block "
@@ -46,15 +44,13 @@ const Subheader = () => {
               )
             }}
           />
-          <div className="col-2">
-            <button
-              className="w-100 d-none d-lg-flex a-i-center j-c-center b-r-50x p-10x mh-50x  gap-6x bg-blue-normal"
-              onClick={() => (categoryOpen ? dispatch(closeMenu()) : dispatch(openCategory()))}
-            >
-              {categoryOpen ? <IconClose style={{ color: '#202020' }} /> : <IconCategory />}
-              <p>Toate Categoriile</p>
-            </button>
-          </div>
+          <button
+            className="col-lg-2 d-none d-lg-flex a-i-center j-c-center b-r-50x p-10x mh-50x  gap-6x bg-blue-normal"
+            onClick={() => (categoryOpen ? dispatch(closeMenu()) : dispatch(openCategory()))}
+          >
+            {categoryOpen ? <IconClose style={{ color: '#202020' }} /> : <IconCategory />}
+            <p>Toate Categoriile</p>
+          </button>
           <div
             className={classNames(
               style.inputSearch,
