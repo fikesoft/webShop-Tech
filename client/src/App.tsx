@@ -2,7 +2,15 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { ProtectedRote } from './components'
 import { MainLayout, ContLayout } from './layouts'
-import { HomePage, Contact, Error404, Livrare, DespreNoi, Google } from './pages'
+import {
+  HomePage,
+  Contact,
+  Error404,
+  Livrare,
+  DespreNoi,
+  Google,
+  Catalog,
+} from './pages'
 import { Comenzi, DatePersonale, NewSeller, Securitate } from './pages'
 import './assets/style/index.scss'
 
@@ -27,6 +35,10 @@ function App() {
         {
           path: 'despre-noi',
           element: <DespreNoi />,
+        },
+        {
+          path: 'catalog/:categorySlug/:subCategorySlug?',
+          element: <Catalog />,
         },
         {
           path: 'auth',

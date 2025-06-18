@@ -13,3 +13,4 @@ export { default as Securitate } from './Cont Pages/Securitate/Securitate'
 
 //Empty Page
 export { default as EmptyPage } from './Empty/EmptyPage'
+export { default as Catalog } from './Catalog/Catalog'
