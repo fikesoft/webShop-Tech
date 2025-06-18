@@ -26,7 +26,7 @@ const modalRegistry: Record<
   exit: ({ errorMessage }) => <SignOut erorMessage={errorMessage} />,
   wrongRole: () => <WrongRole />,
   googleError: ({ errorMessage }) => <GoogleError errorMessage={errorMessage} />,
-  catalog: () => <CatalogList />,
+  catalog: ({ slug, onClose }) => <CatalogList slug={slug} handleClose={onClose} />,
 }
 
 export function ModalHost() {
@@ -42,14 +42,10 @@ export function ModalHost() {
   const handleClose = () => dispatch(closeMenu())
   // Confirm handler for generic modals
   const handleConfirm = () => {
-    // if (onConfirm) {
-    //   onConfirm()
-    // }
     switch (payload.modalType) {
       case 'exit':
         logoutUser()
         break
-      // other modalTypes…
     }
     dispatch(closeMenu())
   }

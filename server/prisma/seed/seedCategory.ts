@@ -2,11 +2,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  // NOTE: We will use “Icon-Home.svg” for every category’s iconFile.
-  // Make sure this file actually gets deployed to e.g. /icons/Icon-Home.svg
-  // so that your frontend can do: <img src="/icons/Icon-Home.svg" … />
-
-  // 1. Create (or upsert) some top‐level categories:
+  // 1. Upsert top‐level categories (unchanged)
   const electronics = await prisma.category.upsert({
     where: { slug: 'electronics' },
     update: {},
@@ -23,7 +19,7 @@ async function main() {
     create: {
       name: 'Home & Kitchen',
       slug: 'home-and-kitchen',
-      iconFile: 'Icon-Home.svg', // ← same icon
+      iconFile: 'Icon-Home.svg',
     },
   })
 
@@ -33,98 +29,153 @@ async function main() {
     create: {
       name: 'Beauty & Health',
       slug: 'beauty-and-health',
-      iconFile: 'Icon-Home.svg', // ← same icon
+      iconFile: 'Icon-Home.svg',
     },
   })
 
-  // 2. Create subcategories under “Electronics” (using the same iconFile)
+  // 2. Subcategories under “Electronics” (Romanian names & slugs)
   await prisma.category.upsert({
-    where: { slug: 'smartphones-gadgets' },
+    where: { slug: 'smartphones-si-gadgeturi' },
     update: {},
     create: {
-      name: 'Smartphones & Gadgets',
-      slug: 'smartphones-gadgets',
+      name: 'Smartphones și Gadgeturi',
+      slug: 'smartphones-si-gadgeturi',
       iconFile: 'Icon-Home.svg',
       parent: { connect: { id: electronics.id } },
     },
   })
 
   await prisma.category.upsert({
-    where: { slug: 'tv-audio-hifi' },
+    where: { slug: 'televizoare-si-audio' },
     update: {},
     create: {
-      name: 'TV, Audio & Hi-Fi',
-      slug: 'tv-audio-hifi',
+      name: 'Televizoare și Audio',
+      slug: 'televizoare-si-audio',
       iconFile: 'Icon-Home.svg',
       parent: { connect: { id: electronics.id } },
     },
   })
 
   await prisma.category.upsert({
-    where: { slug: 'computers-laptops' },
+    where: { slug: 'calculatoare-si-laptopuri' },
     update: {},
     create: {
-      name: 'Computers & Laptops',
-      slug: 'computers-laptops',
+      name: 'Calculatoare și Laptopuri',
+      slug: 'calculatoare-si-laptopuri',
       iconFile: 'Icon-Home.svg',
       parent: { connect: { id: electronics.id } },
     },
   })
 
-  // 3. Subcategories under “Home & Kitchen”
   await prisma.category.upsert({
-    where: { slug: 'kitchen-appliances' },
+    where: { slug: 'accesorii-electronice' },
     update: {},
     create: {
-      name: 'Kitchen Appliances',
-      slug: 'kitchen-appliances',
+      name: 'Accesorii Electronice',
+      slug: 'accesorii-electronice',
+      iconFile: 'Icon-Home.svg',
+      parent: { connect: { id: electronics.id } },
+    },
+  })
+
+  // 3. Subcategories under “Home & Kitchen” (Romanian)
+  await prisma.category.upsert({
+    where: { slug: 'electrocasnice-pentru-bucatarie' },
+    update: {},
+    create: {
+      name: 'Electrocasnice pentru Bucătărie',
+      slug: 'electrocasnice-pentru-bucatarie',
       iconFile: 'Icon-Home.svg',
       parent: { connect: { id: homeAndKitchen.id } },
     },
   })
 
   await prisma.category.upsert({
-    where: { slug: 'home-appliances' },
+    where: { slug: 'mobilier-de-interior' },
     update: {},
     create: {
-      name: 'Home Appliances',
-      slug: 'home-appliances',
+      name: 'Mobilier de Interior',
+      slug: 'mobilier-de-interior',
       iconFile: 'Icon-Home.svg',
       parent: { connect: { id: homeAndKitchen.id } },
     },
   })
 
-  // 4. Subcategories under “Beauty & Health”
   await prisma.category.upsert({
-    where: { slug: 'skincare' },
+    where: { slug: 'articole-de-decor' },
     update: {},
     create: {
-      name: 'Skin Care',
-      slug: 'skincare',
+      name: 'Articole de Decor',
+      slug: 'articole-de-decor',
+      iconFile: 'Icon-Home.svg',
+      parent: { connect: { id: homeAndKitchen.id } },
+    },
+  })
+
+  await prisma.category.upsert({
+    where: { slug: 'tesaturi-pentru-casa' },
+    update: {},
+    create: {
+      name: 'Țesături pentru Casă',
+      slug: 'tesaturi-pentru-casa',
+      iconFile: 'Icon-Home.svg',
+      parent: { connect: { id: homeAndKitchen.id } },
+    },
+  })
+
+  // 4. Subcategories under “Beauty & Health” (Romanian)
+  await prisma.category.upsert({
+    where: { slug: 'ingrijirea-pielii' },
+    update: {},
+    create: {
+      name: 'Îngrijirea Pielii',
+      slug: 'ingrijirea-pielii',
       iconFile: 'Icon-Home.svg',
       parent: { connect: { id: beautyAndHealth.id } },
     },
   })
 
   await prisma.category.upsert({
-    where: { slug: 'personal-care' },
+    where: { slug: 'produse-de-machiaj' },
     update: {},
     create: {
-      name: 'Personal Care',
-      slug: 'personal-care',
+      name: 'Produse de Machiaj',
+      slug: 'produse-de-machiaj',
       iconFile: 'Icon-Home.svg',
       parent: { connect: { id: beautyAndHealth.id } },
     },
   })
 
-  // 5. (Optional) Log how many categories now exist
+  await prisma.category.upsert({
+    where: { slug: 'parfumuri' },
+    update: {},
+    create: {
+      name: 'Parfumuri',
+      slug: 'parfumuri',
+      iconFile: 'Icon-Home.svg',
+      parent: { connect: { id: beautyAndHealth.id } },
+    },
+  })
+
+  await prisma.category.upsert({
+    where: { slug: 'sanatate-si-wellness' },
+    update: {},
+    create: {
+      name: 'Sănătate și Wellness',
+      slug: 'sanatate-si-wellness',
+      iconFile: 'Icon-Home.svg',
+      parent: { connect: { id: beautyAndHealth.id } },
+    },
+  })
+
+  // 5. Log summary
   const count = await prisma.category.count()
-  console.log(`✅  Seed complete: ${count} categories in database.`)
+  console.log(`✅ Seed complete: ${count} categories in database.`)
 }
 
 main()
   .catch((e) => {
-    console.error('❌  Seed error:', e)
+    console.error('❌ Seed error:', e)
     process.exit(1)
   })
   .finally(async () => {
