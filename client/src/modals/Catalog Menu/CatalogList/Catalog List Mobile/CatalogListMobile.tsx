@@ -15,8 +15,12 @@ function TopLevelList({ onClose, onSelectMobile }: { onClose: () => void; onSele
   }, [refetch])
   useCloseWindowResize()
 
-  if (isLoading) return <div>Loading…</div>
-  if (error) return <div>Failed to load categories</div>
+  if (isLoading) {
+    return <div>Loading…</div>
+  }
+  if (error) {
+    return <div>Failed to load categories</div>
+  }
 
   // if data is ever undefined, treat it as an empty array
   const cats = data ?? []
@@ -46,8 +50,12 @@ function SubCategoryList({ slug, onClose }: { slug: string; onClose: () => void 
   }, [refetch])
   useCloseWindowResize()
 
-  if (isLoading) return <div>Loading…</div>
-  if (error) return <div>Failed to load subcategories</div>
+  if (isLoading) {
+    return <div>Loading…</div>
+  }
+  if (error) {
+    return <div>Failed to load subcategories</div>
+  }
 
   // safe-guard again:
   const subs = data?.subcategories ?? []

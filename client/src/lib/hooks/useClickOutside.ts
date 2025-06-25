@@ -14,7 +14,9 @@ export function useClickOutside(containerRef: React.RefObject<HTMLDivElement | n
   const categoryOpen = useAppSelector((s) => s.menu.categoryOpen)
 
   useEffect(() => {
-    if (!categoryOpen) return
+    if (!categoryOpen) {
+      return
+    }
 
     const handleClick = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
