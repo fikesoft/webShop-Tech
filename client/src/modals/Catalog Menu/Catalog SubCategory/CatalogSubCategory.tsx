@@ -2,12 +2,14 @@ import style from './catalogSubCategory.module.scss'
 import { useEffect } from 'react'
 import { useGetSubCategories } from '../../../lib/hooks/useGetSubCategories'
 import classNames from 'classnames'
+import { useLocation, useNavigate } from 'react-router-dom'
 interface Props {
   slug: string
 }
 const CatalogSubCategory: React.FC<Props> = ({ slug }) => {
   const { data, isLoading, isError, refetch } = useGetSubCategories(slug)
-
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
   useEffect(() => {
     refetch()
   }, [refetch])
@@ -22,15 +24,15 @@ const CatalogSubCategory: React.FC<Props> = ({ slug }) => {
   return (
     <ul className={style.catalogList}>
       {data?.subcategories.map((sub) => (
-        <>
-          <li key={sub.id} className={classNames(style.catalogItem, 'paragraph-small fw-bold mt-10x mb-10x ')}>
-            {sub.name}
-          </li>
-          <ul>
-            <li>Electrocasnice</li>
-            <li>Mecanica</li>
-          </ul>
-        </>
+        <li
+          key={sub.id}
+          className={classNames(style.catalogItem, 'paragraph-small fw-bold mt-10x mb-10x ')}
+          onClick={() => {
+            navigate(`${pathname}/${sub.slug}`)
+          }}
+        >
+          {sub.name}
+        </li>
       ))}
     </ul>
   )

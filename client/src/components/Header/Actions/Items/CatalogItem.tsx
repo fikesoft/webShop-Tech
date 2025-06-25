@@ -12,10 +12,11 @@ const CatalogItem = () => {
       onClick={() => {
         disptach(
           openMenu({
-            modalType: 'catalog',
+            modalType: 'catalogMobile',
             title: 'Catalog',
             headerDisplay: true,
             fullWindow: true,
+            data: { slug: undefined },
           })
         )
       }}

@@ -5,6 +5,7 @@ import { MainLayout, ContLayout } from './layouts'
 import { HomePage, Contact, Error404, Livrare, DespreNoi, Google } from './pages'
 import { Comenzi, DatePersonale, NewSeller, Securitate } from './pages'
 import './assets/style/index.scss'
+import Catalog from './pages/Catalog/Catalog'
 
 function App() {
   const routes = createBrowserRouter([
@@ -34,6 +35,22 @@ function App() {
             {
               path: 'google',
               element: <Google />,
+            },
+          ],
+        },
+        {
+          path: 'catalog',
+          element: <Catalog />,
+          children: [
+            {
+              path: ':category',
+              element: <Catalog />,
+              children: [
+                {
+                  path: ':subCategory',
+                  element: <Catalog />,
+                },
+              ],
             },
           ],
         },

@@ -17,10 +17,11 @@ const Nav = () => {
             onClick={() => {
               disptach(
                 openMenu({
-                  modalType: 'catalog',
-                  title: 'Catalog',
+                  modalType: 'catalogMobile',
+                  title: 'Categories',
                   headerDisplay: true,
                   fullWindow: true,
+                  data: { slug: undefined },
                 })
               )
             }}

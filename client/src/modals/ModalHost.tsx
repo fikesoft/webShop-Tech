@@ -1,7 +1,7 @@
 import React, { JSX } from 'react'
 import useAppDispatch from '../store/hooks/useDispach'
 import useAppSelector from '../store/hooks/useSelector'
-import { closeMenu } from '../store/slices/menuSlice'
+import { closeMenu, openMenu } from '../store/slices/menuSlice'
 import style from './modalHost.module.scss'
 import IconClose from '../assets/img/Icon-Close.svg?react'
 
@@ -13,8 +13,8 @@ import classNames from 'classnames'
 import { useLogOutUser } from '../lib/hooks/useLogOutUser'
 import WrongRole from './Permission Modal/WrongRole'
 import GoogleError from './Google Error Modal/GoogleError'
-import CatalogList from './Catalog Menu/Catalog List/CatalogList'
-// Registry mapping
+import CatalogListMobile from './Catalog Menu/CatalogList/Catalog List Mobile/CatalogListMobile'
+import { useNavigate } from 'react-router-dom'
 const modalRegistry: Record<
   string,
   (
@@ -26,13 +26,16 @@ const modalRegistry: Record<
   exit: ({ errorMessage }) => <SignOut erorMessage={errorMessage} />,
   wrongRole: () => <WrongRole />,
   googleError: ({ errorMessage }) => <GoogleError errorMessage={errorMessage} />,
-  catalog: ({ slug, onClose }) => <CatalogList slug={slug} handleClose={onClose} />,
+  catalogMobile: ({ slug, onClose, onSelectMobile }) => (
+    <CatalogListMobile slug={slug} onClose={onClose} onSelectMobile={onSelectMobile} />
+  ),
 }
 
 export function ModalHost() {
   const dispatch = useAppDispatch()
   const { isOpen, payload } = useAppSelector((state) => state.menu)
   const { logoutUser } = useLogOutUser()
+  const navigate = useNavigate()
   if (!isOpen || !payload) {
     return null
   }
@@ -50,10 +53,38 @@ export function ModalHost() {
     dispatch(closeMenu())
   }
 
-  // Lookup component
-  const Component = modalRegistry[modalType]
-  const body = Component ? Component({ onClose: handleClose, ...data }) : null
+  const catalogProps = {
+    slug: data.slug as string | undefined,
+    onClose: handleClose,
+    onSelectMobile: (newSlug: string) => {
+      if (!data.slug) {
+        navigate(`/catalog/${newSlug}`)
+        dispatch(
+          openMenu({
+            modalType: 'catalogMobile',
+            title: 'Subcategories',
+            headerDisplay: true,
+            fullWindow: true,
+            data: { slug: newSlug },
+          })
+        )
+      } else {
+        navigate(`/catalog/${data.slug}/${newSlug}`)
+        dispatch(closeMenu())
+      }
+    },
+  }
 
+  // pick the component factory from the registry
+  const Component = modalRegistry[modalType]
+  if (!Component) {
+    console.warn(`No modal registered for type “${modalType}”`)
+    return null
+  }
+
+  // render via JSX
+  const body =
+    modalType === 'catalogMobile' ? <Component {...catalogProps} /> : <Component onClose={handleClose} {...data} />
   return (
     <div className={style.modalBackdrop}>
       <div className={fullWindow ? style.fullWindow : style.modalWindow}>

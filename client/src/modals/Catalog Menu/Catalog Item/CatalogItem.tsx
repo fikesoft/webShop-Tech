@@ -1,39 +1,36 @@
 import React from 'react'
-import classNames from 'classnames'
 import style from './catalogItem.module.scss'
-import useAppDispatch from '../../../store/hooks/useDispach'
-import { openMenu } from '../../../store/slices/menuSlice'
+import classNames from 'classnames'
 
-const CatalogItem: React.FC<{
+interface CatalogItemProps {
   slug: string
   categoryName: string
   categoryIconFile: string
-  onSelect?: (slug: string, name: string) => void
-  handleClose?: () => void
-}> = ({ slug, categoryName, categoryIconFile, onSelect, handleClose }) => {
-  const dispatch = useAppDispatch()
-
-  const handleClick = () => {
-    if (onSelect) {
-      onSelect(slug, categoryName)
-    } else if (handleClose) {
-      // modal flow
-      handleClose()
-      dispatch(
-        openMenu({
-          modalType: 'catalog',
-          title: categoryName,
-          headerDisplay: true,
-          fullWindow: true,
-          data: { slug },
-        })
-      )
+  onSelectDesktop?: (slug: string) => void
+  onSelectMobile?: (slug: string) => void
+  onClose?: () => void
+}
+const CatalogItem: React.FC<CatalogItemProps> = ({
+  slug,
+  categoryIconFile,
+  categoryName,
+  onSelectDesktop,
+  onSelectMobile,
+  onClose,
+}) => {
+  const handleOnClick = () => {
+    if (onSelectDesktop) {
+      onSelectDesktop(slug)
+    } else if (onSelectMobile && onClose) {
+      onClose()
+      onSelectMobile(slug)
     }
   }
+
   return (
     <li
       className={classNames(style.catalogItem, 'paragraph-small')}
-      onClick={handleClick}
+      onClick={handleOnClick}
       style={
         {
           '--icon-url': `url(/icons/${categoryIconFile})`,

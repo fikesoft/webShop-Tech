@@ -15,10 +15,10 @@ const Subheader = () => {
   const [inputSearchTrigger, setInputSearchTrigger] = useState(false)
   const { categoryOpen } = useAppSelector((state) => state.menu)
   const dispatch = useAppDispatch()
+
   const toggleInputSearch = () => {
     setInputSearchTrigger((prev) => !prev)
   }
-  console.log('Subheader render — categoryOpen =', categoryOpen)
 
   return (
     <header className="p-20x" style={{ backgroundColor: 'white' }}>
