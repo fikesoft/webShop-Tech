@@ -1,81 +1,79 @@
-@use '../../assets/style/mixins/mixins' as * ;
+@use '../../assets/style/mixins/mixins' as *;
 @use '../../assets/style/colors/colors-variables' as *;
-.productContainer{
+.productContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 1px;
+  background-color: white;
+  width: 324px;
+  border-radius: 16px;
+
+  .productImg {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    .badgesContainer {
+      position: absolute;
+      top: 50px;
+      left: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+  .infoWrapper {
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    gap:1px;
-    background-color: white;
-    width: 324px;
-    border-radius: 16px;
-
-    .productImg{
-        position: relative;
+    gap: 12px;
+    padding: 24px;
+    .nameContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      .ratingContainer {
+        display: flex;
+      }
+    }
+    .infoPrice {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      gap: 8px;
+    }
+    .raitingContainer {
+      display: flex;
+      gap: 8px;
+      justify-content: start;
+    }
+    .grey {
+      color: rgba($color: #202020, $alpha: 0.5);
+    }
+    .underlined {
+      text-decoration: line-through;
+    }
+    .productActions {
+      display: flex;
+      gap: 24px;
+      width: 100%;
+      .buyProduct {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 2px;
+        @include regularButton();
+        padding: 14px 0px;
+        width: 60%;
+        background-color: color('blue', 'normal');
+      }
+      .actions {
         display: flex;
         justify-content: center;
-        .badgesContainer{
-            position: absolute;
-            top: 50px;
-            left: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        align-items: center;
+        gap: 16px;
+      }
     }
-    .infoWrapper{
-        display: flex;
-        flex-direction: column;
-        gap:12px;
-        padding: 24px;
-        .nameContainer{
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            .ratingContainer{
-                display: flex;
-            }
-        }
-        .infoPrice{
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            gap: 8px;
-        }
-        .raitingContainer{
-            display: flex;
-            gap: 8px;
-            justify-content: start;
-        }
-        .grey{
-            color: rgba($color: #202020, $alpha: 0.5);
-        }
-        .underlined{
-            text-decoration: line-through;
-        }
-        .productActions{
-            display: flex;
-            gap: 24px;
-            width: 100%;
-            .buyProduct{
-                display: flex;
-                align-items: baseline;
-                justify-content: center;
-                gap: 2px;
-                @include regularButton();
-                padding: 14px 0px;
-                width: 60%;
-                background-color: color('blue','normal');
-            }
-            .actions{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 16px;
-            }
-        }
-    }
-    
-    
+  }
 }
 
 @media (max-width: 768px) {
@@ -85,13 +83,13 @@
     border-radius: 16px;
 
     .productImg {
-    flex-direction: column-reverse;
-    align-items: center;  
-    justify-content: space-around;
-    
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: space-around;
+
       img {
         border-radius: 16px 0 0 16px;
-        max-width: 128px ;
+        max-width: 128px;
         max-height: 128px;
       }
 

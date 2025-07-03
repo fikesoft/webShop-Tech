@@ -11,10 +11,13 @@ export const productsRouter = router({
         categorySlug: z.string().optional(),
         subCategorySlug: z.string().optional(),
         sort: z.enum(['POPULARITY', 'DISCOUNT', 'PRICE_DESC', 'PRICE_ASC', 'NEW']).optional(),
+        availability: z.enum(['IN_STOCK', 'ON_ORDER']).optional(),
+        priceMin: z.number().min(0).optional(),
+        priceMax: z.number().min(0).optional(),
       })
     )
     .query(async ({ ctx, input }) => {
-      const { page = 1, limit = 20, categorySlug, subCategorySlug, sort } = input
+      const { page = 1, limit = 20, categorySlug, subCategorySlug, sort, availability, priceMin, priceMax } = input
 
       // build your WHERE filter
       const where: Prisma.ProductWhereInput = {}
@@ -28,6 +31,20 @@ export const productsRouter = router({
             { slug: categorySlug }, // if any products sit directly under the top-level
             { parent: { slug: categorySlug } }, // products in its subcategories
           ],
+        }
+      }
+
+      if (availability) {
+        where.availability = availability
+      }
+
+      if (priceMin !== undefined || priceMax !== undefined) {
+        where.price = {}
+        if (priceMin !== undefined) {
+          where.price.gte = priceMin
+        }
+        if (priceMax !== undefined) {
+          where.price.lte = priceMax
         }
       }
 

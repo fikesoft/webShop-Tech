@@ -6,7 +6,7 @@ import style from './modalHost.module.scss'
 import IconClose from '../assets/img/Icon-Close.svg?react'
 
 // Import modal components
-import { Auth } from '../components'
+import { Auth, CatalogAside } from '../components'
 import Menu from './Menu Modal/Menu'
 import SignOut from './SignOut Modal/SignOut'
 import classNames from 'classnames'
@@ -29,6 +29,7 @@ const modalRegistry: Record<
   catalogMobile: ({ slug, onClose, onSelectMobile }) => (
     <CatalogListMobile slug={slug} onClose={onClose} onSelectMobile={onSelectMobile} />
   ),
+  filterMobile: () => <CatalogAside />,
 }
 
 export function ModalHost() {

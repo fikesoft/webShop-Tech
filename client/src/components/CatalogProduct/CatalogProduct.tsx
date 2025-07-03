@@ -38,7 +38,9 @@ const CatalogProduct: React.FC<CatalogProductProps> = ({
 
   // "-10%" or "" if no discount
   const getPercentage = (): string => {
-    if (priceNum <= 0 || discountNum <= 0) return ''
+    if (priceNum <= 0 || discountNum <= 0) {
+      return ''
+    }
     const pct = Math.round((discountNum / priceNum) * 100)
     return `-${pct}%`
   }

@@ -1,5 +1,5 @@
-.catalog{
-    display: flex; 
-    flex-wrap: wrap;
-    gap:24px;
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }

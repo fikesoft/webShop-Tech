@@ -5,9 +5,11 @@ import { CatalogAside } from '../components'
 import { useIsMobile } from '../lib/hooks/useIsMobile'
 import style from './catalogLayout.module.scss'
 import IconFilter from '../assets/img/Icon-Filter.svg?react'
+import useAppDispatch from '../store/hooks/useDispach'
+import { openMenu } from '../store/slices/menuSlice'
 const CatalogLayout: React.FC = () => {
   const isMobile = useIsMobile(768)
-
+  const dispatch = useAppDispatch()
   return (
     <section>
       <div className="container">
@@ -22,7 +24,15 @@ const CatalogLayout: React.FC = () => {
             <button
               className={style.buttonFilter}
               onClick={() => {
-                /* you can toggle a sidebar or open a modal here */
+                dispatch(
+                  openMenu({
+                    modalType: 'filterMobile',
+                    title: 'Filtreaza',
+                    headerDisplay: true,
+                    fullWindow: true,
+                    data: { slug: undefined },
+                  })
+                )
               }}
             >
               <IconFilter />

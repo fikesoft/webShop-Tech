@@ -37,7 +37,7 @@ async function main() {
 
   // 2. ————————————————————————————————————————
   // Subcategorías de Electronics
-  const smartphones = await prisma.category.upsert({
+  await prisma.category.upsert({
     where: { slug: 'smartphones-si-gadgeturi' },
     update: {},
     create: {
@@ -166,27 +166,27 @@ async function main() {
 
   // 5. ————————————————————————————————————————
   // Características globales
-  const dims = await prisma.characteristic.upsert({
+  await prisma.characteristic.upsert({
     where: { slug: 'dimensions' },
     update: {},
     create: { name: 'Dimensiuni', slug: 'dimensions', group: 'Generale' },
   })
-  const brand = await prisma.characteristic.upsert({
+  await prisma.characteristic.upsert({
     where: { slug: 'brand' },
     update: {},
     create: { name: 'Brand', slug: 'brand', group: 'Generale' },
   })
-  const display = await prisma.characteristic.upsert({
+  await prisma.characteristic.upsert({
     where: { slug: 'display' },
     update: {},
     create: { name: 'Tip display', slug: 'display', group: 'Display' },
   })
-  const memoryChar = await prisma.characteristic.upsert({
+  await prisma.characteristic.upsert({
     where: { slug: 'memory' },
     update: {},
     create: { name: 'Memorie', slug: 'memory', group: 'Memorie' },
   })
-  const simChar = await prisma.characteristic.upsert({
+  await prisma.characteristic.upsert({
     where: { slug: 'sim' },
     update: {},
     create: { name: 'SIM', slug: 'sim', group: 'Memorie' },
@@ -501,6 +501,7 @@ async function main() {
     const imgs = p.images.map((url, i) => ({ url, position: i + 1 }))
     const variantCreates = p.variants.map((v) => ({ ...v }))
     const charCreates = p.characteristics.map((ch) => ({
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       characteristic: { connect: { id: charMap[ch.slug]?.id! } },
       value: ch.value,
     }))
