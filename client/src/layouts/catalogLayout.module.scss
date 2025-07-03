@@ -1,0 +1,8 @@
+@use '../assets/style/mixins/mixins' as * ;
+@use '../assets/style/colors/colors-variables' as *;
+.buttonFilter{
+    @include regularButton();
+    padding: 14px 0px;
+    background-color: color('blue','normal');
+    cursor: pointer;
+}

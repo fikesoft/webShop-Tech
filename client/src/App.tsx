@@ -6,6 +6,7 @@ import { HomePage, Contact, Error404, Livrare, DespreNoi, Google } from './pages
 import { Comenzi, DatePersonale, NewSeller, Securitate } from './pages'
 import './assets/style/index.scss'
 import Catalog from './pages/Catalog/Catalog'
+import CatalogLayout from './layouts/CatalogLayout'
 
 function App() {
   const routes = createBrowserRouter([
@@ -40,8 +41,12 @@ function App() {
         },
         {
           path: 'catalog',
-          element: <Catalog />,
+          element: <CatalogLayout />,
           children: [
+            {
+              index: true,
+              element: <Catalog />,
+            },
             {
               path: ':category',
               element: <Catalog />,
